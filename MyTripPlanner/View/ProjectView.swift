@@ -61,7 +61,7 @@ struct ProjectView: View {
                                         .bold()
                                 }
                                 NavigationLink {
-                                    LocationView()
+                                    AllLocationsView()
                                 } label: {
                                     Text("Locations")
                                         .font(.subheadline)
