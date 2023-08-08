@@ -43,13 +43,6 @@ struct ProjectView: View {
                         } header: {
                             Text("Description")
                         }
-                        Section {
-                            RoundedRectangle(cornerRadius: 5)
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.pink)
-                        } header: {
-                            Text("Description")
-                        }
                         
                         if (isEditing == false) {
                             Section {
