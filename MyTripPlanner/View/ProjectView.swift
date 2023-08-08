@@ -30,10 +30,10 @@ struct ProjectView: View {
                 if let tripDate {
                     
                     MapView()
+                        .allowsHitTesting(false)
                         .frame(height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                         .shadow(radius: 10)
-                        .padding()
                     
                     Form {
                         Section {
@@ -84,7 +84,7 @@ struct ProjectView: View {
                 }
             }.navigationTitle(name)
                 .navigationBarTitleDisplayMode(.inline)
-                .padding()
+                .padding(.horizontal)
                 .toolbar {
                     Button(isEditing ? "Save" : "Edit") {}
                 }

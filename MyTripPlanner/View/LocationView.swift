@@ -28,8 +28,6 @@ struct LocationView: View {
                     .frame(height: 300)
                     .clipShape(RoundedRectangle(cornerRadius: 30))
                     .shadow(radius: 10)
-                    .padding()
-
                 
                 Form {
                     Section {
@@ -115,6 +113,7 @@ struct LocationView: View {
         }.sheet(isPresented: $isSymbolPickerPresented) {
             SymbolPicker(symbol: $icon)
         }
+        .padding(.horizontal)
         
     }
 }
