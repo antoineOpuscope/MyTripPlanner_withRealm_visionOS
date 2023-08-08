@@ -8,8 +8,88 @@
 import SwiftUI
 
 struct ProjectView: View {
+    
+    //@EnvironmentObject var project: Project
+    
+    @State var name = "Project 1"
+    @State var description = "Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise."
+    @State var tripDate: DateInterval? = DateInterval(start: .now, end: .distantFuture)
+    @State var creationDate: Date = Date.now
+    @State var membres: [String]? = nil
+    
+    var visitLocations: [VisitLocation] = []
+    var hotelLocations: [HotelLocation] = []
+    
+    @State var isEditing: Bool = false
+    
+    private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack(spacing: 10) {
+                if let tripDate {
+                    Form {
+                        Section {
+                            Text("\(tripDate.start.formatted(date: .abbreviated, time: .omitted)) \(Image(systemName: "arrow.left.and.right")) \(tripDate.end.formatted(date: .abbreviated, time: .omitted))")
+                            
+                            
+                            
+                            
+                        } header: {
+                            Text("Date")
+                        }
+                        Section {
+                            Text(self.description)
+                        } header: {
+                            Text("Description")
+                        }
+                        Section {
+                            RoundedRectangle(cornerRadius: 5)
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.pink)
+                        } header: {
+                            Text("Description")
+                        }
+                        
+                        if (isEditing == false) {
+                            Section {
+                                NavigationLink {
+                                    MapView()
+                                } label: {
+                                    Text("Display map")
+                                        .font(.subheadline)
+                                        .bold()
+                                }
+                                NavigationLink {
+                                    ExportView()
+                                } label: {
+                                    Text("Export")
+                                        .font(.subheadline)
+                                        .bold()
+                                }
+                                NavigationLink {
+                                    LocationView()
+                                } label: {
+                                    Text("Locations")
+                                        .font(.subheadline)
+                                        .bold()
+                                }
+                            } header: {
+                                Text("Actions")
+                            }
+                        }
+                        
+                    }
+                    
+                }
+            }.navigationTitle(name)
+                .navigationBarTitleDisplayMode(.inline)
+                .padding()
+                .toolbar {
+                    Button(isEditing ? "Save" : "Edit") {}
+                }
+                .background(backgroundColor)
+        }
     }
 }
 
