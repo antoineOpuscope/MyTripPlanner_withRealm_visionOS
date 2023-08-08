@@ -8,14 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @StateObject private var user: User = User()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(0...11, id: \.self) {i in
+                    NavigationLink {
+                        ProjectView()
+                    } label: {
+                        HStack {
+                            Text("Project \(i)")
+                        }
+                        
+                    }
+                }
+            }.navigationTitle("Projects")
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
 
