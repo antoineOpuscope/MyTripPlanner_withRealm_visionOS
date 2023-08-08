@@ -28,6 +28,13 @@ struct ProjectView: View {
         NavigationStack {
             VStack(spacing: 10) {
                 if let tripDate {
+                    
+                    MapView()
+                        .frame(height: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .shadow(radius: 10)
+                        .padding()
+                    
                     Form {
                         Section {
                             Text("\(tripDate.start.formatted(date: .abbreviated, time: .omitted)) \(Image(systemName: "arrow.left.and.right")) \(tripDate.end.formatted(date: .abbreviated, time: .omitted))")

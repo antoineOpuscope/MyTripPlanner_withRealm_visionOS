@@ -26,7 +26,10 @@ struct LocationView: View {
                 MapView()
                     .allowsHitTesting(false)
                     .frame(height: 300)
-                    .padding(.top)
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .shadow(radius: 10)
+                    .padding()
+
                 
                 Form {
                     Section {
