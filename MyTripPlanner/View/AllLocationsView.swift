@@ -19,7 +19,7 @@ struct AllLocationsView: View {
         var name: String
     }
     
-    let allTokens = [Token(name: "City"), Token(name: "Name"), Token(name: "Country")]
+    let allTokens = [Token(name: "City"), Token(name: "Name"), Token(name: "Country"), Token(name: "Favorite")]
     @State private var currentTokens = [Token]()
     
     var body: some View {
@@ -31,6 +31,8 @@ struct AllLocationsView: View {
                     } label: {
                         HStack {
                             Text("\(Image(systemName: "mappin")) name - City")
+                            Spacer()
+                            Image(systemName: "bookmark")
                         }
                         
                     }
