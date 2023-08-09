@@ -10,20 +10,23 @@ import SymbolPicker
 import EmojiPicker
 
 struct LocationView: View {
+    
+    @State var isEditing: Bool = true
+    @State var isEmojiPickerPresented: Bool = false
+    @State var isSymbolPickerPresented: Bool = false
+    
+    @State var isReserved: Bool = false
+    @State var isFavorite: Bool = false
+    @State var price: Float = 0
+    @State var icon = "mappin"
+    @State var color = Color.blue
+    
+    @State var description = "Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise."
+    
+    let latitude = 7.065306
+    let longitude = 125.607833
+    
     var body: some View {
-        
-        @State var isEditing: Bool = true
-        @State var isEmojiPickerPresented: Bool = false
-        @State var isSymbolPickerPresented: Bool = false
-        
-        @State var isReserved: Bool = false
-        @State var isFavorite: Bool = false
-        @State var price: Float = 0
-        @State var icon = "mappin"
-        
-        let latitude = 7.065306
-        let longitude = 125.607833
-        
         NavigationStack {
             VStack {
                 NavigationLink {
@@ -42,7 +45,7 @@ struct LocationView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 10)
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(.cyan)
+                                    .foregroundColor(color)
                                 
                                 Image(systemName: icon)
                                     .resizable()
@@ -51,14 +54,9 @@ struct LocationView: View {
                             }
                             Spacer()
                             if (isEditing) {
-                                Button("Choose color") {
+                                ColorPicker("Color", selection: $color)
+                                    .labelsHidden()
                                     
-                                }
-                                    .padding(5)
-                                    .overlay {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(.blue, lineWidth: 1)
-                                    }
                                 Button("Choose icon")  {
                                     isSymbolPickerPresented = true
                                 }
@@ -75,7 +73,8 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        Text("Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise.")
+                        TextField("Description", text: $description, axis: .vertical)
+                            .disabled(isEditing == false)                        
                     } header: {
                         Text("Description")
                     }
@@ -104,24 +103,25 @@ struct LocationView: View {
                     }
                 }
                 
-            }.navigationTitle("Pin")
+            }.sheet(isPresented: $isSymbolPickerPresented) {
+                SymbolPicker(symbol: $icon)
+            }
+            .navigationTitle("Pin")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(isEditing ? "Save" : "Edit") { isEditing.toggle()
                         }
                     }
-                    ToolbarItem(placement: .bottomBar) {
-                        Button {
+                    if isEditing == false {
+                        ToolbarItem(placement: .bottomBar) {
+                            Button {
                                 isFavorite.toggle()
-                        } label: {
-                            Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                            } label: {
+                                Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                            }
                         }
                     }
                 }
-        }.sheet(isPresented: $isEmojiPickerPresented) {
-            SymbolPicker(symbol: $icon)
-        }.sheet(isPresented: $isSymbolPickerPresented) {
-            SymbolPicker(symbol: $icon)
         }
     }
 }
