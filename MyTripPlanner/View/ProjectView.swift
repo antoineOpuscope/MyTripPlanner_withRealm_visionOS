@@ -57,13 +57,6 @@ struct ProjectView: View {
                         if (isEditing == false) {
                             Section {
                                 NavigationLink {
-                                    MapView()
-                                } label: {
-                                    Text("Display map")
-                                        .font(.subheadline)
-                                        .bold()
-                                }
-                                NavigationLink {
                                     ExportView()
                                 } label: {
                                     Text("Export")
