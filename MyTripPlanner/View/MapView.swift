@@ -45,7 +45,6 @@ struct MapView: View {
                     pins.append(Pin(name: "", coordinate: tappedCoordinate, icon: "mappin", color: .green))
                 }
             })
-            
             .mapControls{
                 MapCompass()
             }
