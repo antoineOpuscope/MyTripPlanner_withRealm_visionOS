@@ -21,6 +21,9 @@ struct LocationView: View {
         @State var price: Float = 0
         @State var icon = "mappin"
         
+        let latitude = 7.065306
+        let longitude = 125.607833
+        
         NavigationStack {
             VStack {
                 NavigationLink {
@@ -92,7 +95,10 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        Button("Open with GPS") {}
+                        if let url = URL(string: "maps://?saddr=&daddr=\(latitude),\(longitude)") {
+                            Link("Open with GPS", destination: url)
+                        }
+                        
                     } header: {
                         Text("Actions")
                     }
