@@ -75,7 +75,7 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        Text("Dasdad")
+                        Text("Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise.")
                     } header: {
                         Text("Description")
                     }
