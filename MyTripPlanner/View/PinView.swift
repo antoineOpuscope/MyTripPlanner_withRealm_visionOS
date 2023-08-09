@@ -6,15 +6,41 @@
 //
 
 import SwiftUI
+import CoreLocation
+
+struct Pin: Identifiable {
+    let id = UUID()
+    let name: String
+    let coordinate: CLLocationCoordinate2D
+    let icon: String
+    let color: Color
+}
 
 struct PinView: View {
+    
+    let pin: Pin
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Circle()
+                .frame(width: 30)
+                .foregroundColor(pin.color)
+                .overlay {
+                    Circle()
+                        .stroke(.black, lineWidth: 1)
+                }
+                .shadow(radius: 5)
+            Image(systemName: pin.icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+            
+        }
     }
 }
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
-        PinView()
+        PinView(pin: Pin(name: "A", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), icon: "mappin", color: .blue))
     }
 }
