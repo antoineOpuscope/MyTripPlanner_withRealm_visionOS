@@ -23,11 +23,15 @@ struct LocationView: View {
         
         NavigationStack {
             VStack {
-                MapView()
-                    .allowsHitTesting(false)
-                    .frame(height: 300)
-                    .clipShape(RoundedRectangle(cornerRadius: 30))
-                    .shadow(radius: 10)
+                NavigationLink {
+                    MapView()
+                } label: {
+                    MapView()
+                        .allowsHitTesting(false)
+                        .frame(height: 300)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .shadow(radius: 10)
+                }.padding(.horizontal)
                 
                 Form {
                     Section {
@@ -113,8 +117,6 @@ struct LocationView: View {
         }.sheet(isPresented: $isSymbolPickerPresented) {
             SymbolPicker(symbol: $icon)
         }
-        .padding(.horizontal)
-        
     }
 }
 

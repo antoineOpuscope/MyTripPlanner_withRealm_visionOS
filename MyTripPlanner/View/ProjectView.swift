@@ -28,12 +28,15 @@ struct ProjectView: View {
         NavigationStack {
             VStack(spacing: 10) {
                 if let tripDate {
-                    
-                    MapView()
-                        .allowsHitTesting(false)
-                        .frame(height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                        .shadow(radius: 10)
+                    NavigationLink {
+                        MapView()
+                    } label: {
+                        MapView()
+                            .allowsHitTesting(false)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 30))
+                            .shadow(radius: 10)
+                    }.padding(.horizontal)
                     
                     Form {
                         Section {
@@ -84,7 +87,6 @@ struct ProjectView: View {
                 }
             }.navigationTitle(name)
                 .navigationBarTitleDisplayMode(.inline)
-                .padding(.horizontal)
                 .toolbar {
                     Button(isEditing ? "Save" : "Edit") {}
                 }
