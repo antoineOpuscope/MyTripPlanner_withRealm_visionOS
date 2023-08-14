@@ -30,6 +30,9 @@ struct PinView: View {
     
     let pin: Pin
     
+    let deleteLocation: () -> Void
+    let openLocationView: () -> Void
+    
     var body: some View {
         ZStack {
             Circle()
@@ -47,11 +50,23 @@ struct PinView: View {
                 .foregroundColor(.black)
             
         }
+        .contextMenu(ContextMenu(menuItems: {
+            Button(role: .destructive) {
+                deleteLocation()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+            Button {
+                openLocationView()
+            } label: {
+                Label("Open", systemImage: "arrow.forward")
+            }
+        }))
     }
 }
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
-        PinView(pin: Pin(location: TestData.location1))
+        PinView(pin: Pin(location: TestData.location1), deleteLocation: {}, openLocationView: {})
     }
 }

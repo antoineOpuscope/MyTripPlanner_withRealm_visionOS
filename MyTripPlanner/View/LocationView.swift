@@ -45,9 +45,9 @@ struct LocationView: View {
         NavigationStack {
             VStack {
                 NavigationLink {
-                    MapView(project: project, location: location)
+                    MapView(project: project, location: location, isContextMenuAllowed: false)
                 } label: {
-                    MapView(project: project, location: location)
+                    MapView(project: project, location: location, isContextMenuAllowed: false)
                         .allowsHitTesting(false)
                         .frame(height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 30))

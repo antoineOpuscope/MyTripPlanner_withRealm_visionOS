@@ -13,6 +13,8 @@ struct MapView: View {
     var project: Project
     var location: Location?
     
+    var isContextMenuAllowed: Bool
+    
     @State var pins: [Pin]
     
     @State private var cameraProsition: MapCameraPosition = .camera(
@@ -24,7 +26,7 @@ struct MapView: View {
             )
         )
     
-    init(project: Project, location: Location? = nil) {
+    init(project: Project, location: Location? = nil, isContextMenuAllowed: Bool) {
         self.project = project
         self.location = location
         if let location {
@@ -32,6 +34,7 @@ struct MapView: View {
         } else {
             _pins = State(initialValue: project.locations.map {Pin(location: $0)})
         }
+        self.isContextMenuAllowed = isContextMenuAllowed
     }
     
     var body: some View {
@@ -47,7 +50,7 @@ struct MapView: View {
                     {
                         ForEach(pins, id:\.id) { pin in
                             Annotation("", coordinate: pin.coordinate) {
-                                PinView(pin: pin)
+                                PinView(pin: pin, deleteLocation: {}, openLocationView: {})
                             }
                         }
                     }
@@ -72,6 +75,6 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(project: TestData.project, location: nil)
+        MapView(project: TestData.project, location: nil, isContextMenuAllowed: true)
     }
 }
