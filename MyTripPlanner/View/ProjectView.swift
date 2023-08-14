@@ -52,10 +52,24 @@ struct ProjectView: View {
                         Text("Description")
                     }
                 }
-            }.navigationTitle("\(isEditing ? "Edit" : "")\(project.name)")
+            }.navigationTitle("\(isEditing ? "Edit" : "") \(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    Button(isEditing ? "Save" : "Edit") {}
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(isEditing ? "Save" : "Edit") {
+                            isEditing.toggle()
+                        }
+                    }
+                    
+                    if isEditing {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(role: .destructive) {
+                                
+                            } label: {
+                                Image(systemName: "trash").foregroundColor(.red)
+                            }
+                        }
+                    }
                 }
                 .background(backgroundColor)
         }
