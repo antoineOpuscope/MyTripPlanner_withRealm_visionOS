@@ -51,27 +51,6 @@ struct ProjectView: View {
                     } header: {
                         Text("Description")
                     }
-                    
-                    if (isEditing == false) {
-                        Section {
-                            NavigationLink {
-                                ExportView()
-                            } label: {
-                                Text("Export")
-                                    .font(.subheadline)
-                                    .bold()
-                            }
-                            NavigationLink {
-                                AllLocationsView(project: project)
-                            } label: {
-                                Text("Locations")
-                                    .font(.subheadline)
-                                    .bold()
-                            }
-                        } header: {
-                            Text("Actions")
-                        }
-                    }
                 }
             }.navigationTitle("\(isEditing ? "Edit" : "")\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
