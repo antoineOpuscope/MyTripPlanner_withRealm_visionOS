@@ -22,6 +22,17 @@ class StateController: ObservableObject {
         storageController.save(projects)
     }
     
+    func removeProject(project: Project) {
+        projects.removeAll {$0.id == project.id}
+        storageController.save(projects)
+    }
+    
+    func updateProject(project: Project) {
+        projects.removeAll {$0.id == project.id}
+        projects.append(project)
+        storageController.save(projects)
+    }
+    
     func addLocation(project: Project) {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
         let location = Location()
