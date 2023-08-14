@@ -113,20 +113,20 @@ struct LocationView: View {
                         Button(isEditing ? "Save" : "Edit") { isEditing.toggle()
                         }
                     }
-                    if isEditing == false {
-                        ToolbarItem(placement: .bottomBar) {
-                            Button {
-                                isFavorite.toggle()
-                            } label: {
-                                Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
-                            }
-                        }
-                    } else {
+                    if isEditing {
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(role: .destructive) {
                                 
                             } label: {
                                 Image(systemName: "trash").foregroundColor(.red)
+                            }
+                        }
+                    } else {
+                        ToolbarItem(placement: .bottomBar) {
+                            Button {
+                                isFavorite.toggle()
+                            } label: {
+                                Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
                             }
                         }
                     }
