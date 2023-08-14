@@ -121,6 +121,14 @@ struct LocationView: View {
                                 Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
                             }
                         }
+                    } else {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(role: .destructive) {
+                                
+                            } label: {
+                                Image(systemName: "trash").foregroundColor(.red)
+                            }
+                        }
                     }
                 }
         }
