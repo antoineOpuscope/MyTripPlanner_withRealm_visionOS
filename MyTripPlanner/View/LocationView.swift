@@ -8,31 +8,46 @@
 import SwiftUI
 import SymbolPicker
 import EmojiPicker
+import CoreLocation
 
 struct LocationView: View {
+    var project: Project
+    var location: Location
+    
+    @State var name: String
+    @State var description: String
+    @State var isFavorite: Bool
+    @State var color: Color = .green
+    @State var price: Float
+    @State var coordinate: CLLocationCoordinate2D?
+    @State var icon: String = "mappin"
     
     @State var isEditing: Bool = true
     @State var isEmojiPickerPresented: Bool = false
     @State var isSymbolPickerPresented: Bool = false
     
-    @State var isReserved: Bool = false
-    @State var isFavorite: Bool = false
-    @State var price: Float = 0
-    @State var icon = "mappin"
-    @State var color = Color.blue
-    
-    @State var description = "Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise."
-    
     let latitude = 7.065306
     let longitude = 125.607833
+    
+    init(project: Project, location: Location) {
+        self.project = project
+        self.location = location
+        self.name = location.name
+        self.description = location.description
+        self.isFavorite = location.isFavorite
+        self.color = location.color
+        self.price = location.price
+        self.coordinate = location.coordinate
+        self.icon = location.icon
+    }
     
     var body: some View {
         NavigationStack {
             VStack {
                 NavigationLink {
-                    MapView()
+                    MapView(project: project, location: location)
                 } label: {
-                    MapView()
+                    MapView(project: project, location: location)
                         .allowsHitTesting(false)
                         .frame(height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
@@ -45,9 +60,9 @@ struct LocationView: View {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 10)
                                     .frame(width: 30, height: 30)
-                                    .foregroundColor(color)
+                                    .foregroundColor(location.color)
                                 
-                                Image(systemName: icon)
+                                Image(systemName: location.icon)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 20, height: 20)
@@ -80,20 +95,6 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        Toggle(isOn: $isReserved) {
-                            Text("Booked :")
-                        }
-                        .toggleStyle(.switch)
-                        .disabled(isEditing == false)
-                        
-                        Text("Price: \(price.formatted()) $")
-                        
-                        
-                    } header: {
-                        Text("Booking info")
-                    }
-                    
-                    Section {
                         if let url = URL(string: "maps://?saddr=&daddr=\(latitude),\(longitude)") {
                             Link("Open with GPS", destination: url)
                         }
@@ -106,7 +107,7 @@ struct LocationView: View {
             }.sheet(isPresented: $isSymbolPickerPresented) {
                 SymbolPicker(symbol: $icon)
             }
-            .navigationTitle("Pin")
+            .navigationTitle("\(isEditing ? "Edit" : "") Pin")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(isEditing ? "Save" : "Edit") { isEditing.toggle()
@@ -128,6 +129,6 @@ struct LocationView: View {
 
 struct LocationView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationView()
+        LocationView(project: TestData.project, location: TestData.location1)
     }
 }

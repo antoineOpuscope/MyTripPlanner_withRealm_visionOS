@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AllLocationsView: View {
     
-    var locations: [Location] = [Location]()
+    var project: Project
     
     @State private var searchText = ""
     
@@ -25,14 +25,14 @@ struct AllLocationsView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(0...30, id: \.self) {_ in
+                ForEach(project.locations, id: \.id) {location in
                     NavigationLink {
-                        LocationView()
+                        LocationView(project: project, location: location)
                     } label: {
                         HStack {
-                            Text("\(Image(systemName: "mappin")) name - City")
+                            Text("\(Image(systemName: location.icon)) \(location.name) - City")
                             Spacer()
-                            Image(systemName: "bookmark")
+                            Image(systemName: location.isFavorite ? "bookmark.fill" : "bookmark")
                         }
                         
                     }
@@ -67,6 +67,6 @@ struct AllLocationsView: View {
 
 struct AllLocationsView_Previews: PreviewProvider {
     static var previews: some View {
-        AllLocationsView()
+        AllLocationsView(project: TestData.project)
     }
 }

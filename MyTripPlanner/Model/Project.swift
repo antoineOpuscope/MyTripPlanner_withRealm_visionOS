@@ -10,11 +10,19 @@ import Foundation
 class Project: Identifiable, Codable {
     var id = UUID()
     
-    var name = ""
+    var name: String
     var description = ""
     var tripDate: DateInterval? = nil
-    var creationDate: Date = Date.now
+    var creationDate: Date
     
     var locations: [Location] = []
     
+    init(id: UUID = UUID(), name: String, description: String = "", tripDate: DateInterval? = nil, locations: [Location]) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.tripDate = tripDate
+        self.locations = locations
+        self.creationDate = Date.now
+    }
 }

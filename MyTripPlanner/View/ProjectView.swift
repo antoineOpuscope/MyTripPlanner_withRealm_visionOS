@@ -9,76 +9,71 @@ import SwiftUI
 
 struct ProjectView: View {
     
-    //@EnvironmentObject var project: Project
+    let project: Project
     
-    @State var name = "Project 1"
-    @State var description = "Appela ete fin crosse moi ecarta lazzis. Glisse pleine bas pas charge boules but touffe raison pic. Des monte iii decor ans crete ils. Murmure allures je encourt beffroi ensuite il geantes. Et durant eperon gloire balaye canons labour je ah. Avons ils peu oncle eux canif drape irise."
-    @State var tripDate: DateInterval? = DateInterval(start: .now, end: .distantFuture)
-    @State var creationDate: Date = Date.now
-    @State var membres: [String]? = nil
+    @State var name: String
+    @State var description = ""
+    @State var tripDate: DateInterval? = nil
+    @State var creationDate: Date
     
-    var visitLocations: [VisitLocation] = []
-    var hotelLocations: [HotelLocation] = []
+    @State var locations: [Location] = []
     
     @State var isEditing: Bool = false
     
     private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
     
+    //https://stackoverflow.com/a/68217351 with we need to use _ and State
+    init(project: Project) {
+        self.project = project
+        _name = State(initialValue: project.name)
+        _description = State(initialValue: project.description)
+        _tripDate = State(initialValue: project.tripDate)
+        _creationDate = State(initialValue: project.creationDate)
+        _locations = State(initialValue: project.locations)
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
-                if let tripDate {
-                    NavigationLink {
-                        MapView()
-                    } label: {
-                        MapView()
-                            .allowsHitTesting(false)
-                            .frame(height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 30))
-                            .shadow(radius: 10)
-                    }.padding(.horizontal)
-                    
-                    Form {
-                        Section {
-                            Text("\(tripDate.start.formatted(date: .abbreviated, time: .omitted)) \(Image(systemName: "arrow.left.and.right")) \(tripDate.end.formatted(date: .abbreviated, time: .omitted))")
-                            
-                            
-                            
-                            
-                        } header: {
-                            Text("Date")
-                        }
-                        Section {
-                            Text(self.description)
-                        } header: {
-                            Text("Description")
-                        }
-                        
-                        if (isEditing == false) {
-                            Section {
-                                NavigationLink {
-                                    ExportView()
-                                } label: {
-                                    Text("Export")
-                                        .font(.subheadline)
-                                        .bold()
-                                }
-                                NavigationLink {
-                                    AllLocationsView()
-                                } label: {
-                                    Text("Locations")
-                                        .font(.subheadline)
-                                        .bold()
-                                }
-                            } header: {
-                                Text("Actions")
-                            }
-                        }
-                        
+                NavigationLink {
+                    MapView(project: project)
+                } label: {
+                    MapView(project: project)
+                        .allowsHitTesting(false)
+                        .frame(height: 200)
+                        .clipShape(RoundedRectangle(cornerRadius: 30))
+                        .shadow(radius: 10)
+                }.padding(.horizontal)
+                
+                Form {
+                    Section {
+                        Text(project.description)
+                    } header: {
+                        Text("Description")
                     }
                     
+                    if (isEditing == false) {
+                        Section {
+                            NavigationLink {
+                                ExportView()
+                            } label: {
+                                Text("Export")
+                                    .font(.subheadline)
+                                    .bold()
+                            }
+                            NavigationLink {
+                                AllLocationsView(project: project)
+                            } label: {
+                                Text("Locations")
+                                    .font(.subheadline)
+                                    .bold()
+                            }
+                        } header: {
+                            Text("Actions")
+                        }
+                    }
                 }
-            }.navigationTitle(name)
+            }.navigationTitle("\(isEditing ? "Edit" : "")\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     Button(isEditing ? "Save" : "Edit") {}
@@ -90,6 +85,6 @@ struct ProjectView: View {
 
 struct ProjectView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectView()
+        ProjectView(project: TestData.project)
     }
 }

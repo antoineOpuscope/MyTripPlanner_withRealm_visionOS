@@ -10,18 +10,33 @@ import CoreLocation
 
 class Location: Identifiable, Codable {
     var id = UUID()
-    var name = ""
-    var description = ""
-    var isFavorite: Bool = false
+    var name: String
+    var description: String
+    var isFavorite: Bool
     var color: Color = .green
-    var price: Float = 0
-    var coordinate: CLLocationCoordinate2D? = nil
+    var price: Float
+    var coordinate: CLLocationCoordinate2D
     var icon: String = "mappin"
+    
+    enum LocationDecodingError: Error {
+        case invalidCoordinateData
+    }
     
     enum CodingKeys: String, CodingKey {
         case id, name, description, isFavorite, color, price
         case coordinateLatitude = "latitude"
         case coordinateLongitude = "longitude"
+    }
+    
+    init(id: UUID = UUID(), name: String, description: String, isFavorite: Bool, color: Color, price: Float, coordinate: CLLocationCoordinate2D, icon: String) {
+        self.id = id
+        self.name = name
+        self.description = description
+        self.isFavorite = isFavorite
+        self.color = color
+        self.price = price
+        self.coordinate = coordinate
+        self.icon = icon
     }
     
     required init(from decoder: Decoder) throws {
@@ -32,10 +47,12 @@ class Location: Identifiable, Codable {
         isFavorite = try container.decode(Bool.self, forKey: .isFavorite)
         price = try container.decode(Float.self, forKey: .price)
         
-        if let latitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLatitude),
-           let longitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLongitude) {
-            coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        }
+        guard let latitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLatitude),
+                  let longitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLongitude) else {
+                throw LocationDecodingError.invalidCoordinateData
+            }
+        
+        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
         // Decode RGB color values
         if let colorComponents = try container.decodeIfPresent([Double].self, forKey: .color) {
@@ -61,10 +78,8 @@ class Location: Identifiable, Codable {
         let colorComponents = color.rgbComponents
         try container.encode(colorComponents, forKey: .color)
         
-        if let coordinate = coordinate {
-            try container.encode(coordinate.latitude, forKey: .coordinateLatitude)
-            try container.encode(coordinate.longitude, forKey: .coordinateLongitude)
-        }
+        try container.encode(coordinate.latitude, forKey: .coordinateLatitude)
+        try container.encode(coordinate.longitude, forKey: .coordinateLongitude)
     }
 }
 

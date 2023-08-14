@@ -9,17 +9,17 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject private var user: User = User()
+    @EnvironmentObject private var stateController: StateController
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(0...11, id: \.self) {i in
+                ForEach(stateController.projects, id: \.id) {project in
                     NavigationLink {
-                        ProjectView()
+                        ProjectView(project: project)
                     } label: {
                         HStack {
-                            Text("Project \(i)")
+                            Text("Project \(project.name)")
                         }
                         
                     }

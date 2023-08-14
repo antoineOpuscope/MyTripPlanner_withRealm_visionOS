@@ -9,11 +9,21 @@ import SwiftUI
 import CoreLocation
 
 struct Pin: Identifiable {
-    let id = UUID()
+    let id: UUID
+    let location: Location
     let name: String
     let coordinate: CLLocationCoordinate2D
     let icon: String
     let color: Color
+    
+    init(location: Location) {
+        self.location = location
+        self.id = location.id
+        self.name = location.name
+        self.coordinate = location.coordinate
+        self.icon = location.icon
+        self.color = location.color
+    }
 }
 
 struct PinView: View {
@@ -42,6 +52,6 @@ struct PinView: View {
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
-        PinView(pin: Pin(name: "A", coordinate: CLLocationCoordinate2D(latitude: 0, longitude: 0), icon: "mappin", color: .blue))
+        PinView(pin: Pin(location: TestData.location1))
     }
 }

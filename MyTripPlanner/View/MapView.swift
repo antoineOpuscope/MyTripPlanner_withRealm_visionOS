@@ -9,12 +9,11 @@ import SwiftUI
 import MapKit
 
 struct MapView: View {
+        
+    var project: Project
+    var location: Location?
     
-    @State var pins: [Pin] = [
-        Pin(name: "A", coordinate: CLLocationCoordinate2D(latitude: 48.85828676671761, longitude: 2.295548475176827), icon: "mappin", color: Color.blue),
-        Pin(name: "B", coordinate: CLLocationCoordinate2D(latitude: 48.84965726942819, longitude: 2.323792739725356), icon: "mappin", color: Color.yellow),
-        Pin(name: "C", coordinate: CLLocationCoordinate2D(latitude: 48.8437637557084, longitude: 2.3047341429913013), icon: "books.vertical", color: Color.pink),
-    ]
+    @State var pins: [Pin]
     
     @State private var cameraProsition: MapCameraPosition = .camera(
             MapCamera(
@@ -25,37 +24,54 @@ struct MapView: View {
             )
         )
     
+    init(project: Project, location: Location? = nil) {
+        self.project = project
+        self.location = location
+        if let location {
+            _pins = State(initialValue: [Pin(location: location)])
+        } else {
+            _pins = State(initialValue: project.locations.map {Pin(location: $0)})
+        }
+    }
     
     var body: some View {
-        MapReader { reader in
+        ZStack {
+            Color.blue
             
-            Map(
-                position: $cameraProsition,
-                interactionModes: [.all]
-            )
-            {
-                ForEach(pins, id:\.id) { pin in
-                    Annotation("", coordinate: pin.coordinate) {
-                        PinView(pin: pin)
+            MapReader { reader in
+                ZStack {
+                    Map(
+                        position: $cameraProsition,
+                        interactionModes: [.all]
+                    )
+                    {
+                        ForEach(pins, id:\.id) { pin in
+                            Annotation("", coordinate: pin.coordinate) {
+                                PinView(pin: pin)
+                            }
+                        }
                     }
-                }
-            }
-            .onTapGesture(perform: { screenCoord in
-                if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
-                    pins.append(Pin(name: "", coordinate: tappedCoordinate, icon: "mappin", color: .green))
-                }
-            })
-            .mapControls{
-                MapCompass()
-            }
-            .mapStyle(.standard(elevation: .flat))
+                    .onTapGesture(perform: { screenCoord in
+                        /*
+                        if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
+                            pins.append(Pin(location: Location(name: "New location", description: "", isFavorite: false, color: .green, price: 0, coordinate: tappedCoordinate, icon: "mappin")))
+                        }
+                         */
+                    })
+                    .mapControls{
+                        MapCompass()
+                    }
+                    .mapStyle(.standard(elevation: .flat))
+                    
 
+                }
+            }
         }
     }
 }
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView()
+        MapView(project: TestData.project, location: nil)
     }
 }
