@@ -17,6 +17,15 @@
 		1129F9B92A81417400E3374A /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9B82A81417400E3374A /* PinView.swift */; };
 		1129F9BB2A81424400E3374A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9BA2A81424400E3374A /* ImagePicker.swift */; };
 		1129F9BD2A81427B00E3374A /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9BC2A81427B00E3374A /* Bundle-Decodable.swift */; };
+		1129F9C62A8232A200E3374A /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9C52A8232A200E3374A /* Project.swift */; };
+		1129F9C82A82340000E3374A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9C72A82340000E3374A /* Location.swift */; };
+		1129F9D02A827BE200E3374A /* ExportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9CF2A827BE100E3374A /* ExportView.swift */; };
+		1129F9D22A827DF100E3374A /* AllLocationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9D12A827DF100E3374A /* AllLocationsView.swift */; };
+		1129F9D52A8296A600E3374A /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1129F9D42A8296A600E3374A /* EmojiPicker */; };
+		1129F9D82A8296C800E3374A /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1129F9D72A8296C800E3374A /* SymbolPicker */; };
+		11A154DB2A8A355900BA65DF /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A154DA2A8A355900BA65DF /* TestData.swift */; };
+		11EB0C372A868AE50060E253 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C362A868AE50060E253 /* StorageController.swift */; };
+		11EB0C392A868D710060E253 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C382A868D710060E253 /* StateController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +40,13 @@
 		1129F9B82A81417400E3374A /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		1129F9BA2A81424400E3374A /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		1129F9BC2A81427B00E3374A /* Bundle-Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
+		1129F9C52A8232A200E3374A /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		1129F9C72A82340000E3374A /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		1129F9CF2A827BE100E3374A /* ExportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportView.swift; sourceTree = "<group>"; };
+		1129F9D12A827DF100E3374A /* AllLocationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllLocationsView.swift; sourceTree = "<group>"; };
+		11A154DA2A8A355900BA65DF /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		11EB0C362A868AE50060E253 /* StorageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
+		11EB0C382A868D710060E253 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +54,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1129F9D82A8296C800E3374A /* SymbolPicker in Frameworks */,
+				1129F9D52A8296A600E3374A /* EmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +81,7 @@
 		1129F9A32A81381900E3374A /* MyTripPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				11EB0C352A868AD60060E253 /* Controller */,
 				1129F9C02A8142D300E3374A /* View */,
 				1129F9BF2A8142C800E3374A /* Model */,
 				1129F9BE2A81429F00E3374A /* Utils */,
@@ -87,6 +106,7 @@
 			children = (
 				1129F9BA2A81424400E3374A /* ImagePicker.swift */,
 				1129F9BC2A81427B00E3374A /* Bundle-Decodable.swift */,
+				11A154DA2A8A355900BA65DF /* TestData.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -94,6 +114,8 @@
 		1129F9BF2A8142C800E3374A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1129F9C52A8232A200E3374A /* Project.swift */,
+				1129F9C72A82340000E3374A /* Location.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -103,10 +125,21 @@
 			children = (
 				1129F9B22A813F2300E3374A /* ProjectView.swift */,
 				1129F9B42A813F4900E3374A /* MapView.swift */,
-				1129F9B62A81416500E3374A /* LocationView.swift */,
 				1129F9B82A81417400E3374A /* PinView.swift */,
+				1129F9B62A81416500E3374A /* LocationView.swift */,
+				1129F9CF2A827BE100E3374A /* ExportView.swift */,
+				1129F9D12A827DF100E3374A /* AllLocationsView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		11EB0C352A868AD60060E253 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				11EB0C382A868D710060E253 /* StateController.swift */,
+				11EB0C362A868AE50060E253 /* StorageController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +158,10 @@
 			dependencies = (
 			);
 			name = MyTripPlanner;
+			packageProductDependencies = (
+				1129F9D42A8296A600E3374A /* EmojiPicker */,
+				1129F9D72A8296C800E3374A /* SymbolPicker */,
+			);
 			productName = MyTripPlanner;
 			productReference = 1129F9A12A81381900E3374A /* MyTripPlanner.app */;
 			productType = "com.apple.product-type.application";
@@ -153,6 +190,10 @@
 				Base,
 			);
 			mainGroup = 1129F9982A81381900E3374A;
+			packageReferences = (
+				1129F9D32A8296A600E3374A /* XCRemoteSwiftPackageReference "EmojiPicker" */,
+				1129F9D62A8296C800E3374A /* XCRemoteSwiftPackageReference "SymbolPicker" */,
+			);
 			productRefGroup = 1129F9A22A81381900E3374A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -182,10 +223,17 @@
 				1129F9B32A813F2300E3374A /* ProjectView.swift in Sources */,
 				1129F9B52A813F4900E3374A /* MapView.swift in Sources */,
 				1129F9B92A81417400E3374A /* PinView.swift in Sources */,
+				11A154DB2A8A355900BA65DF /* TestData.swift in Sources */,
 				1129F9BD2A81427B00E3374A /* Bundle-Decodable.swift in Sources */,
 				1129F9BB2A81424400E3374A /* ImagePicker.swift in Sources */,
 				1129F9B72A81416500E3374A /* LocationView.swift in Sources */,
+				11EB0C392A868D710060E253 /* StateController.swift in Sources */,
+				1129F9D02A827BE200E3374A /* ExportView.swift in Sources */,
+				1129F9C62A8232A200E3374A /* Project.swift in Sources */,
 				1129F9A72A81381900E3374A /* ContentView.swift in Sources */,
+				11EB0C372A868AE50060E253 /* StorageController.swift in Sources */,
+				1129F9C82A82340000E3374A /* Location.swift in Sources */,
+				1129F9D22A827DF100E3374A /* AllLocationsView.swift in Sources */,
 				1129F9A52A81381900E3374A /* MyTripPlannerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,11 +366,13 @@
 				DEVELOPMENT_TEAM = N47G66W4UV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -347,11 +397,13 @@
 				DEVELOPMENT_TEAM = N47G66W4UV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,6 +439,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1129F9D32A8296A600E3374A /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kelvas09/EmojiPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		1129F9D62A8296C800E3374A /* XCRemoteSwiftPackageReference "SymbolPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/xnth97/SymbolPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1129F9D42A8296A600E3374A /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1129F9D32A8296A600E3374A /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
+		};
+		1129F9D72A8296C800E3374A /* SymbolPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1129F9D62A8296C800E3374A /* XCRemoteSwiftPackageReference "SymbolPicker" */;
+			productName = SymbolPicker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1129F9992A81381900E3374A /* Project object */;
 }
