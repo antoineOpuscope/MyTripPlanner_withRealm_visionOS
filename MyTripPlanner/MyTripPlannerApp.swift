@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct MyTripPlannerApp: App {
+    
+    @StateObject var stateController = StateController()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(stateController)
         }
     }
 }
