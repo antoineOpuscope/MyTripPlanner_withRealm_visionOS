@@ -21,7 +21,7 @@ struct ContentView: View {
                         ProjectView(project: project)
                     } label: {
                         HStack {
-                            Text("Project \(project.name)")
+                            Text("\(project.name)")
                         }
                         
                     }
