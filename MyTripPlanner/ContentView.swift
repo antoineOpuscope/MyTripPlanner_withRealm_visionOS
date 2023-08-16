@@ -11,6 +11,8 @@ struct ContentView: View {
     
     @EnvironmentObject private var stateController: StateController
     
+    @State var isCreateProjectViewPresented: Bool = false
+    
     var body: some View {
         NavigationStack {
             List {
@@ -26,6 +28,16 @@ struct ContentView: View {
                 }
             }.navigationTitle("Projects")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Add", systemImage: "plus") {
+                            self.isCreateProjectViewPresented = true
+                        }
+                    }
+                }
+                .sheet(isPresented: $isCreateProjectViewPresented) {
+                    ProjectCreationView()
+                }
         }
     }
 }
