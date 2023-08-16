@@ -26,6 +26,9 @@ struct LocationView: View {
     @State var isEmojiPickerPresented: Bool = false
     @State var isSymbolPickerPresented: Bool = false
     
+    @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var stateController: StateController
+
     let latitude = 7.065306
     let longitude = 125.607833
     
@@ -108,15 +111,18 @@ struct LocationView: View {
                 SymbolPicker(symbol: $icon)
             }
             .navigationTitle("\(isEditing ? "Edit" : "") Pin")
+            .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(isEditing)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button(isEditing ? "Save" : "Edit") { isEditing.toggle()
                         }
                     }
                     if isEditing {
-                        ToolbarItem(placement: .navigationBarLeading) {
+                        ToolbarItem(placement: .topBarLeading) {
                             Button(role: .destructive) {
-                                
+                                stateController.removeLocation(project: project, location: location)
+                                self.dismiss()
                             } label: {
                                 Image(systemName: "trash").foregroundColor(.red)
                             }
