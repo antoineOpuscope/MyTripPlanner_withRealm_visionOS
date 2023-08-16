@@ -15,6 +15,8 @@ struct MapView: View {
     
     var isContextMenuAllowed: Bool
     
+    @Binding var isAddingLocation: Bool
+    
     @State var pins: [Pin]
     
     @State private var cameraProsition: MapCameraPosition = .camera(
@@ -26,7 +28,7 @@ struct MapView: View {
             )
         )
     
-    init(project: Project, location: Location? = nil, isContextMenuAllowed: Bool) {
+    init(project: Project, isContextMenuAllowed: Bool, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
         self.project = project
         self.location = location
         if let location {
@@ -35,6 +37,8 @@ struct MapView: View {
             _pins = State(initialValue: project.locations.map {Pin(location: $0)})
         }
         self.isContextMenuAllowed = isContextMenuAllowed
+        //https://sarunw.com/posts/binding-initialization/
+        _isAddingLocation = isAddingLocation
     }
     
     var body: some View {
@@ -55,18 +59,17 @@ struct MapView: View {
                         }
                     }
                     .onTapGesture(perform: { screenCoord in
-                        /*
-                        if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
-                            pins.append(Pin(location: Location(name: "New location", description: "", isFavorite: false, color: .green, price: 0, coordinate: tappedCoordinate, icon: "mappin")))
+                        if self.isAddingLocation {
+                            if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
+                                let location = Location(name: "New location", description: "", isFavorite: false, color: .green, price: 0, coordinate: tappedCoordinate, icon: "mappin")
+                                pins.append(Pin(location: location))
+                            }
                         }
-                         */
                     })
                     .mapControls{
                         MapCompass()
                     }
                     .mapStyle(.standard(elevation: .flat))
-                    
-
                 }
             }
         }
@@ -75,6 +78,6 @@ struct MapView: View {
 
 struct MapView_Previews: PreviewProvider {
     static var previews: some View {
-        MapView(project: TestData.project, location: nil, isContextMenuAllowed: true)
+        MapView(project: TestData.project, isContextMenuAllowed: true)
     }
 }

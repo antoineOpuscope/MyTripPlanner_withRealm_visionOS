@@ -39,7 +39,7 @@ struct ProjectView: View {
         NavigationStack {
             VStack(spacing: 10) {
                 NavigationLink {
-                    MapView(project: project, isContextMenuAllowed: true)
+                    ProjectMapView(project: self.project)
                 } label: {
                     MapView(project: project, isContextMenuAllowed: false)
                         .allowsHitTesting(false)
