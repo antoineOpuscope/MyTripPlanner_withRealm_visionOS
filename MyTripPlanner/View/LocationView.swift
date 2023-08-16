@@ -32,13 +32,13 @@ struct LocationView: View {
     init(project: Project, location: Location) {
         self.project = project
         self.location = location
-        self.name = location.name
-        self.description = location.description
-        self.isFavorite = location.isFavorite
-        self.color = location.color
-        self.price = location.price
-        self.coordinate = location.coordinate
-        self.icon = location.icon
+        _name = State(initialValue: location.name)
+        _description = State(initialValue: location.description)
+        _isFavorite = State(initialValue: location.isFavorite)
+        _color = State(initialValue: location.color)
+        _price = State(initialValue: location.price)
+        _coordinate = State(initialValue: location.coordinate)
+        _icon = State(initialValue: location.icon)
     }
     
     var body: some View {
