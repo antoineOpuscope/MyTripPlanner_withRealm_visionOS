@@ -13,6 +13,7 @@ struct ProjectCreationView: View {
     @State private var description: String = ""
     
     @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var stateController: StateController
     
     var body: some View {
         NavigationStack {
@@ -34,7 +35,8 @@ struct ProjectCreationView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button {
-                            
+                            stateController.addProject(project: Project(name: self.name, description: self.description, locations: []))
+                            self.dismiss()
                         } label: {
                             Text("Save")
                         }
