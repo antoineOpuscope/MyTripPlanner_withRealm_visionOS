@@ -10,6 +10,9 @@ import SwiftUI
 struct ProjectView: View {
     
     let project: Project
+    @EnvironmentObject private var stateController: StateController
+    
+    @Environment(\.dismiss) private var dismiss
     
     @State var name: String
     @State var description = ""
@@ -54,20 +57,22 @@ struct ProjectView: View {
                 }
             }.navigationTitle("\(isEditing ? "Edit" : "") \(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(isEditing)
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button(isEditing ? "Save" : "Edit") {
-                            isEditing.toggle()
-                        }
-                    }
-                    
                     if isEditing {
-                        ToolbarItem(placement: .navigationBarLeading) {
+                        
+                        ToolbarItem(placement: .topBarLeading) {
                             Button(role: .destructive) {
-                                
+                                stateController.removeProject(project: self.project)
+                                self.dismiss()
                             } label: {
                                 Image(systemName: "trash").foregroundColor(.red)
                             }
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(isEditing ? "Save" : "Edit") {
+                            isEditing.toggle()
                         }
                     }
                 }
