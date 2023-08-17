@@ -11,16 +11,8 @@ import EmojiPicker
 import CoreLocation
 
 struct LocationView: View {
-    var project: Project
-    var location: Location
-    
-    @State var name: String
-    @State var description: String
-    @State var isFavorite: Bool
-    @State var color: Color = .green
-    @State var price: Float
-    @State var coordinate: CLLocationCoordinate2D?
-    @State var icon: String = "mappin"
+    @StateObject var project: Project
+    @StateObject var location: Location
     
     @State var isEditing: Bool = true
     @State var isEmojiPickerPresented: Bool = false
@@ -31,18 +23,6 @@ struct LocationView: View {
 
     let latitude = 7.065306
     let longitude = 125.607833
-    
-    init(project: Project, location: Location) {
-        self.project = project
-        self.location = location
-        _name = State(initialValue: location.name)
-        _description = State(initialValue: location.description)
-        _isFavorite = State(initialValue: location.isFavorite)
-        _color = State(initialValue: location.color)
-        _price = State(initialValue: location.price)
-        _coordinate = State(initialValue: location.coordinate)
-        _icon = State(initialValue: location.icon)
-    }
     
     var body: some View {
         NavigationStack {
@@ -72,7 +52,7 @@ struct LocationView: View {
                             }
                             Spacer()
                             if (isEditing) {
-                                ColorPicker("Color", selection: $color)
+                                ColorPicker("Color", selection: $location.color)
                                     .labelsHidden()
                                     
                                 Button("Choose icon")  {
@@ -91,8 +71,8 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        TextField("Description", text: $description, axis: .vertical)
-                            .disabled(isEditing == false)                        
+                        TextField("Description", text: $location.description, axis: .vertical)
+                            .disabled(isEditing == false)
                     } header: {
                         Text("Description")
                     }
@@ -108,7 +88,7 @@ struct LocationView: View {
                 }
                 
             }.sheet(isPresented: $isSymbolPickerPresented) {
-                SymbolPicker(symbol: $icon)
+                SymbolPicker(symbol: $location.icon)
             }
             .navigationTitle("\(isEditing ? "Edit" : "") Pin")
             .navigationBarTitleDisplayMode(.inline)
@@ -130,9 +110,9 @@ struct LocationView: View {
                     } else {
                         ToolbarItem(placement: .bottomBar) {
                             Button {
-                                isFavorite.toggle()
+                                location.isFavorite.toggle()
                             } label: {
-                                Image(systemName: isFavorite ? "bookmark.fill" : "bookmark")
+                                Image(systemName: location.isFavorite ? "bookmark.fill" : "bookmark")
                             }
                         }
                     }
