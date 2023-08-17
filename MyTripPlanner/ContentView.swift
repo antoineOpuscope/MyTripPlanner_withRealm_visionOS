@@ -37,7 +37,8 @@ struct ContentView: View {
                 }
                 .sheet(isPresented: $isCreateProjectViewPresented) {
                     ProjectCreationView()
-                }.environmentObject(stateController)
+                        .environmentObject(stateController)
+                }
         }
     }
 }
