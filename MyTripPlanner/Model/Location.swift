@@ -8,15 +8,15 @@
 import SwiftUI
 import CoreLocation
 
-class Location: Identifiable, Codable {
+class Location: Identifiable, Codable, ObservableObject {
     var id = UUID()
-    var name: String
-    var description: String
-    var isFavorite: Bool
-    var color: Color = .green
-    var price: Float
-    var coordinate: CLLocationCoordinate2D
-    var icon: String = "mappin"
+    @Published var name: String
+    @Published var description: String
+    @Published var isFavorite: Bool
+    @Published var color: Color = .green
+    @Published var price: Float
+    @Published var coordinate: CLLocationCoordinate2D
+    @Published var icon: String = "mappin"
     
     enum LocationDecodingError: Error {
         case invalidCoordinateData
