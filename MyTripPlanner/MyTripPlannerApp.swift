@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct MyTripPlannerApp: App {
     
+    // https://www.avanderlee.com/swiftui/stateobject-observedobject-differences/
     @StateObject var stateController = StateController()
     
     var body: some Scene {
