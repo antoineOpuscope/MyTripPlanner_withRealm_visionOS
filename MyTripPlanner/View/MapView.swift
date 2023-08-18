@@ -15,10 +15,22 @@ struct MapView: View {
     
     var isContextMenuAllowed: Bool
     
+    @EnvironmentObject private var stateController: StateController
+    
+    @State private var isCreateLocationSheetPresented: Bool = false
+    
     @Binding var isAddingLocation: Bool
+    @State var tappedCoordinates: Coordinate? = nil
     
-    @State var pins: [Pin]
-    
+    struct Coordinate: Identifiable {
+        let id = UUID()
+        var tappedCoordinates: CLLocationCoordinate2D
+
+        init(tappedCoordinates: CLLocationCoordinate2D) {
+            self.tappedCoordinates = tappedCoordinates
+        }
+    }
+        
     @State private var cameraProsition: MapCameraPosition = .camera(
             MapCamera(
                 centerCoordinate: CLLocationCoordinate2D(latitude: 48.858046588769085, longitude:  2.2949914738436776),
@@ -29,13 +41,8 @@ struct MapView: View {
         )
     
     init(project: Project, isContextMenuAllowed: Bool, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
-        self.project = project
+        _project = ObservedObject(wrappedValue: project)
         self.location = location
-        if let location {
-            _pins = State(initialValue: [Pin(location: location)])
-        } else {
-            _pins = State(initialValue: project.locations.map {Pin(location: $0)})
-        }
         self.isContextMenuAllowed = isContextMenuAllowed
         //https://sarunw.com/posts/binding-initialization/
         _isAddingLocation = isAddingLocation
@@ -52,17 +59,20 @@ struct MapView: View {
                         interactionModes: [.all]
                     )
                     {
-                        ForEach(pins, id:\.id) { pin in
+                        ForEach(project.pins, id:\.id) { pin in
                             Annotation("", coordinate: pin.coordinate) {
-                                PinView(pin: pin, deleteLocation: {}, openLocationView: {})
+                                PinView(pin: pin,
+                                        deleteLocation: {},
+                                        openLocationView: {}
+                                )
                             }
                         }
                     }
                     .onTapGesture(perform: { screenCoord in
                         if self.isAddingLocation {
                             if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
-                                let location = Location(name: "New location", description: "", isFavorite: false, color: .green, price: 0, coordinate: tappedCoordinate, icon: "mappin")
-                                pins.append(Pin(location: location))
+                                tappedCoordinates = Coordinate(tappedCoordinates: tappedCoordinate)
+                                self.isCreateLocationSheetPresented = true
                             }
                         }
                     })
@@ -70,6 +80,13 @@ struct MapView: View {
                         MapCompass()
                     }
                     .mapStyle(.standard(elevation: .flat))
+                    .sheet(item: $tappedCoordinates) { _ in
+                        if let tappedCoordinates {
+                            LocationCreationView(newTappedCoordinate: tappedCoordinates.tappedCoordinates, project: project)
+                                .environmentObject(stateController)
+                        }
+                    }
+                    
                 }
             }
         }
