@@ -36,12 +36,14 @@ class StateController: ObservableObject {
     func addLocation(project: Project, location: Location) {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
         projects[projectIndex].locations.append(location)
+        self.objectWillChange.send()
         storageController.save(projects)
     }
     
     func removeLocation(project: Project, location: Location) {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
         projects[projectIndex].locations.removeAll {$0.id == location.id}
+        self.objectWillChange.send()
         storageController.save(projects)
     }
     
@@ -49,6 +51,7 @@ class StateController: ObservableObject {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
         projects[projectIndex].locations.removeAll {$0.id == location.id}
         projects[projectIndex].locations.append(location)
+        self.objectWillChange.send()
         storageController.save(projects)
     }
 }
