@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 class Project: Identifiable, Codable, ObservableObject {
     var id = UUID()
@@ -16,6 +17,9 @@ class Project: Identifiable, Codable, ObservableObject {
     @Published var creationDate: Date
     
     @Published var locations: [Location] = []
+    @Published var pins: [Pin] = []
+    
+    private var subscribers: Set<AnyCancellable> = []
     
     init(id: UUID = UUID(), name: String, description: String = "", tripDate: DateInterval? = nil, locations: [Location]) {
         self.id = id
@@ -24,6 +28,11 @@ class Project: Identifiable, Codable, ObservableObject {
         self.tripDate = tripDate
         self.locations = locations
         self.creationDate = Date()
+        self.pins = locations.map {Pin(location: $0)}
+        
+        $locations.sink { locations in
+            self.pins = locations.map {Pin(location: $0)}
+        }.store(in: &subscribers)
     }
     
     enum CodingKeys: String, CodingKey {
@@ -43,6 +52,11 @@ class Project: Identifiable, Codable, ObservableObject {
         tripDate = try container.decodeIfPresent(DateInterval.self, forKey: .tripDate)
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         locations = try container.decode([Location].self, forKey: .locations)
+        pins = locations.map {Pin(location: $0)}
+
+        $locations.sink { locations in
+            self.pins = locations.map {Pin(location: $0)}
+        }.store(in: &subscribers)
         
         // For decoding the UUID from a string representation
         if let idString = try? container.decode(String.self, forKey: .id),
