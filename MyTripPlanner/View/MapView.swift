@@ -64,20 +64,21 @@ struct MapView: View {
                                         PinView(pin: pin)
                                     }
                                 }
-                            }
-                            ForEach(project.pins, id:\.id) { pin in
-                                Annotation("", coordinate: pin.coordinate) {
-                                    NavigationLink {
-                                        LocationView(project: self.project, location: pin.location)
-                                    } label: {
-                                        PinView(pin: pin)
-                                            .contextMenu(ContextMenu(menuItems: {
-                                                Button(role: .destructive) {
-                                                    stateController.removeLocation(project: self.project, location: pin.location)
-                                                } label: {
-                                                    Label("Delete", systemImage: "trash")
-                                                }
-                                            }))
+                            } else {
+                                ForEach(project.pins, id:\.id) { pin in
+                                    Annotation("", coordinate: pin.coordinate) {
+                                        NavigationLink {
+                                            LocationView(project: self.project, location: pin.location)
+                                        } label: {
+                                            PinView(pin: pin)
+                                                .contextMenu(ContextMenu(menuItems: {
+                                                    Button(role: .destructive) {
+                                                        stateController.removeLocation(project: self.project, location: pin.location)
+                                                    } label: {
+                                                        Label("Delete", systemImage: "trash")
+                                                    }
+                                                }))
+                                        }
                                     }
                                 }
                             }
