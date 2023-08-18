@@ -50,8 +50,6 @@ struct MapView: View {
     
     var body: some View {
         ZStack {
-            Color.blue
-            
             MapReader { reader in
                 ZStack {
                     Map(
