@@ -30,15 +30,6 @@ struct PinView: View {
     }
 }
 
-
-// This view lets us avoid instantiating our Destination before it has been pushed.
-struct LazyDestination<Destination: View>: View {
-    var destination: () -> Destination
-    var body: some View {
-        self.destination()
-    }
-}
-
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
         PinView(pin: Pin(location: TestData.location1))
