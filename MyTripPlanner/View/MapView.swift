@@ -11,6 +11,7 @@ import MapKit
 struct MapView: View {
         
     @ObservedObject var project: Project
+    // AOM - @ObservedObject not needed because we wont edit it
     var location: Location?
     
     var isContextMenuAllowed: Bool
