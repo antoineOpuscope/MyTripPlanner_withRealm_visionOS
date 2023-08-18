@@ -62,7 +62,7 @@ struct MapView: View {
                         ForEach(project.pins, id:\.id) { pin in
                             Annotation("", coordinate: pin.coordinate) {
                                 PinView(pin: pin,
-                                        deleteLocation: {},
+                                        deleteLocation: {stateController.removeLocation(project: self.project, location: pin.location)},
                                         openLocationView: {}
                                 )
                             }
