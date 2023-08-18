@@ -71,6 +71,13 @@ struct LocationView: View {
                     }
                     
                     Section {
+                        TextField("Name", text: $location.name)
+                            .disabled(isEditing == false)
+                    } header: {
+                        Text("Name")
+                    }
+                    
+                    Section {
                         TextField("Description", text: $location.description, axis: .vertical)
                             .disabled(isEditing == false)
                     } header: {

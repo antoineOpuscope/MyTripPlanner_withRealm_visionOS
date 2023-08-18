@@ -34,9 +34,22 @@ struct ProjectView: View {
                 
                 Form {
                     Section {
-                        Text(project.description)
+                        TextField("Name", text: $project.name)
+                            .disabled(isEditing == false)
+                    } header: {
+                        Text("Name")
+                    }
+                    Section {
+                        TextField("Description", text: $project.description)
+                            .disabled(isEditing == false)
                     } header: {
                         Text("Description")
+                    }
+                    
+                    Section {
+                        Text("\(project.locations.count)")
+                    } header: {
+                        Text("Location count")
                     }
                 }
             }.navigationTitle("\(isEditing ? "Edit" : "") \(project.name)")
