@@ -61,9 +61,7 @@ struct MapView: View {
                             if let location {
                                 ForEach([Pin(location: location)], id:\.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
-                                        PinView(pin: pin,
-                                                deleteLocation: {}
-                                        )
+                                        PinView(pin: pin)
                                     }
                                 }
                             }
@@ -72,9 +70,14 @@ struct MapView: View {
                                     NavigationLink {
                                         LocationView(project: self.project, location: pin.location)
                                     } label: {
-                                        PinView(pin: pin,
-                                                deleteLocation: {stateController.removeLocation(project: self.project, location: pin.location)}
-                                        )
+                                        PinView(pin: pin)
+                                            .contextMenu(ContextMenu(menuItems: {
+                                                Button(role: .destructive) {
+                                                    stateController.removeLocation(project: self.project, location: pin.location)
+                                                } label: {
+                                                    Label("Delete", systemImage: "trash")
+                                                }
+                                            }))
                                     }
                                 }
                             }

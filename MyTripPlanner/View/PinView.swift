@@ -10,9 +10,7 @@ import CoreLocation
 
 struct PinView: View {
     let pin: Pin
-    
-    let deleteLocation: () -> Void
-    
+        
     var body: some View {
         ZStack {
             Circle()
@@ -28,15 +26,7 @@ struct PinView: View {
                 .scaledToFit()
                 .frame(width: 20, height: 20)
                 .foregroundColor(.black)
-            
         }
-        .contextMenu(ContextMenu(menuItems: {
-            Button(role: .destructive) {
-                deleteLocation()
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
-        }))
     }
 }
 
@@ -51,6 +41,6 @@ struct LazyDestination<Destination: View>: View {
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
-        PinView(pin: Pin(location: TestData.location1), deleteLocation: {})
+        PinView(pin: Pin(location: TestData.location1))
     }
 }
