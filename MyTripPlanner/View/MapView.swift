@@ -49,42 +49,56 @@ struct MapView: View {
     }
     
     var body: some View {
-        ZStack {
-            MapReader { reader in
-                ZStack {
-                    Map(
-                        position: $cameraProsition,
-                        interactionModes: [.all]
-                    )
-                    {
-                        ForEach(project.pins, id:\.id) { pin in
-                            Annotation("", coordinate: pin.coordinate) {
-                                PinView(pin: pin,
-                                        deleteLocation: {stateController.removeLocation(project: self.project, location: pin.location)},
-                                        openLocationView: {}
-                                )
+        NavigationStack {
+            ZStack {
+                MapReader { reader in
+                    ZStack {
+                        Map(
+                            position: $cameraProsition,
+                            interactionModes: [.all]
+                        )
+                        {
+                            if let location {
+                                ForEach([Pin(location: location)], id:\.id) { pin in
+                                    Annotation("", coordinate: pin.coordinate) {
+                                        PinView(pin: pin,
+                                                deleteLocation: {}
+                                        )
+                                    }
+                                }
+                            }
+                            ForEach(project.pins, id:\.id) { pin in
+                                Annotation("", coordinate: pin.coordinate) {
+                                    NavigationLink {
+                                        LocationView(project: self.project, location: pin.location)
+                                    } label: {
+                                        PinView(pin: pin,
+                                                deleteLocation: {stateController.removeLocation(project: self.project, location: pin.location)}
+                                        )
+                                    }
+                                }
                             }
                         }
-                    }
-                    .onTapGesture(perform: { screenCoord in
-                        if self.isAddingLocation {
-                            if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
-                                tappedCoordinates = Coordinate(tappedCoordinates: tappedCoordinate)
-                                self.isCreateLocationSheetPresented = true
+                        .onTapGesture(perform: { screenCoord in
+                            if self.isAddingLocation {
+                                if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
+                                    tappedCoordinates = Coordinate(tappedCoordinates: tappedCoordinate)
+                                    self.isCreateLocationSheetPresented = true
+                                }
+                            }
+                        })
+                        .mapControls{
+                            MapCompass()
+                        }
+                        .mapStyle(.standard(elevation: .flat))
+                        .sheet(item: $tappedCoordinates) { _ in
+                            if let tappedCoordinates {
+                                LocationCreationView(newTappedCoordinate: tappedCoordinates.tappedCoordinates, project: project)
+                                    .environmentObject(stateController)
                             }
                         }
-                    })
-                    .mapControls{
-                        MapCompass()
+                        
                     }
-                    .mapStyle(.standard(elevation: .flat))
-                    .sheet(item: $tappedCoordinates) { _ in
-                        if let tappedCoordinates {
-                            LocationCreationView(newTappedCoordinate: tappedCoordinates.tappedCoordinates, project: project)
-                                .environmentObject(stateController)
-                        }
-                    }
-                    
                 }
             }
         }

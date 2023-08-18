@@ -12,7 +12,6 @@ struct PinView: View {
     let pin: Pin
     
     let deleteLocation: () -> Void
-    let openLocationView: () -> Void
     
     var body: some View {
         ZStack {
@@ -37,17 +36,21 @@ struct PinView: View {
             } label: {
                 Label("Delete", systemImage: "trash")
             }
-            Button {
-                openLocationView()
-            } label: {
-                Label("Open", systemImage: "arrow.forward")
-            }
         }))
+    }
+}
+
+
+// This view lets us avoid instantiating our Destination before it has been pushed.
+struct LazyDestination<Destination: View>: View {
+    var destination: () -> Destination
+    var body: some View {
+        self.destination()
     }
 }
 
 struct PinView_Previews: PreviewProvider {
     static var previews: some View {
-        PinView(pin: Pin(location: TestData.location1), deleteLocation: {}, openLocationView: {})
+        PinView(pin: Pin(location: TestData.location1), deleteLocation: {})
     }
 }
