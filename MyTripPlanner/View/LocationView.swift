@@ -14,7 +14,7 @@ struct LocationView: View {
     @ObservedObject var project: Project
     @ObservedObject var location: Location
     
-    @State var isEditing: Bool = true
+    @State var isEditing: Bool = false
     @State var isEmojiPickerPresented: Bool = false
     @State var isSymbolPickerPresented: Bool = false
     
