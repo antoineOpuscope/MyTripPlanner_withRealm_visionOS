@@ -28,7 +28,7 @@ struct ProjectMapView: View {
                             }
                         }
                     }
-                }.navigationTitle("\(project.locations.count)")
+                }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
