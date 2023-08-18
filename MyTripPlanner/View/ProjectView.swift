@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProjectView: View {
     
-    @StateObject var project: Project
+    @ObservedObject var project: Project
     
     @EnvironmentObject private var stateController: StateController
     

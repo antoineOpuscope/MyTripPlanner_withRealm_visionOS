@@ -11,8 +11,8 @@ import EmojiPicker
 import CoreLocation
 
 struct LocationView: View {
-    @StateObject var project: Project
-    @StateObject var location: Location
+    @ObservedObject var project: Project
+    @ObservedObject var location: Location
     
     @State var isEditing: Bool = true
     @State var isEmojiPickerPresented: Bool = false

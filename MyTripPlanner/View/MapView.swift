@@ -10,7 +10,7 @@ import MapKit
 
 struct MapView: View {
         
-    var project: Project
+    @ObservedObject var project: Project
     var location: Location?
     
     var isContextMenuAllowed: Bool
