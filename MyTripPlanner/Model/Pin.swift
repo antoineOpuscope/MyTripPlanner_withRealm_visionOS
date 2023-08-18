@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreLocation
 
-class Pin: Identifiable, ObservableObject {
+class Pin: Identifiable {
     let id: UUID
     let location: Location
     let name: String

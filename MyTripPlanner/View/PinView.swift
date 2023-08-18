@@ -9,8 +9,7 @@ import SwiftUI
 import CoreLocation
 
 struct PinView: View {
-    
-    @ObservedObject var pin: Pin
+    let pin: Pin
     
     let deleteLocation: () -> Void
     let openLocationView: () -> Void
