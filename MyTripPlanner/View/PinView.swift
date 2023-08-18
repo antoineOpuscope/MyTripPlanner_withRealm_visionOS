@@ -8,27 +8,9 @@
 import SwiftUI
 import CoreLocation
 
-struct Pin: Identifiable {
-    let id: UUID
-    let location: Location
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-    let icon: String
-    let color: Color
-    
-    init(location: Location) {
-        self.location = location
-        self.id = location.id
-        self.name = location.name
-        self.coordinate = location.coordinate
-        self.icon = location.icon
-        self.color = location.color
-    }
-}
-
 struct PinView: View {
     
-    let pin: Pin
+    @ObservedObject var pin: Pin
     
     let deleteLocation: () -> Void
     let openLocationView: () -> Void
