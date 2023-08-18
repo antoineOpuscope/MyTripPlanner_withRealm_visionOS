@@ -49,6 +49,8 @@ class StateController: ObservableObject {
     
     func updateLocation(project: Project, location: Location) {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
+        
+        // Maybe it is overkill but it is a first solution
         projects[projectIndex].locations.removeAll {$0.id == location.id}
         projects[projectIndex].locations.append(location)
         self.objectWillChange.send()
