@@ -57,6 +57,9 @@ struct ProjectView: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(isEditing ? "Save" : "Edit") {
                             isEditing.toggle()
+                            if (isEditing == false) {
+                                stateController.updateProject(project: project)
+                            }
                         }
                     }
                 }

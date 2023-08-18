@@ -95,7 +95,11 @@ struct LocationView: View {
                 .navigationBarBackButtonHidden(isEditing)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(isEditing ? "Save" : "Edit") { isEditing.toggle()
+                        Button(isEditing ? "Save" : "Edit") {
+                            isEditing.toggle()
+                            if (isEditing == false) {
+                                stateController.updateLocation(project: project, location: location)
+                            }
                         }
                     }
                     if isEditing {
