@@ -28,8 +28,10 @@ class StateController: ObservableObject {
     }
     
     func updateProject(project: Project) {
-        projects.removeAll {$0.id == project.id}
-        projects.append(project)
+        guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
+
+        projects[projectIndex] = project
+        self.objectWillChange.send()
         storageController.save(projects)
     }
     
@@ -49,10 +51,10 @@ class StateController: ObservableObject {
     
     func updateLocation(project: Project, location: Location) {
         guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
+        guard let locationIndex = projects[projectIndex].locations.firstIndex(where: { $0.id == location.id }) else { return }
         
         // Maybe it is overkill but it is a first solution
-        projects[projectIndex].locations.removeAll {$0.id == location.id}
-        projects[projectIndex].locations.append(location)
+        projects[projectIndex].locations[locationIndex] = location
         self.objectWillChange.send()
         storageController.save(projects)
     }
