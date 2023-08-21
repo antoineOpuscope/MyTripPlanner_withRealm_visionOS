@@ -20,13 +20,11 @@ struct ProjectMapView: View {
             MapView(project: project, isContextMenuAllowed: true, isAddingLocation: $isAddingLocation)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        if isAddingLocation == false {
-                            Button {
-                                isAddingLocation.toggle()
-                            } label: {
-                                Image(systemName: "plus")
-                            }
-                        }
+                        Button {
+                            isAddingLocation.toggle()
+                        } label: {
+                            Image(systemName: "plus")
+                        }.disabled(isAddingLocation)
                     }
                 }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
