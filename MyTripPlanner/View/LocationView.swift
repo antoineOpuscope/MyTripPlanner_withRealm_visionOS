@@ -17,6 +17,7 @@ struct LocationView: View {
     @State var isEditing: Bool = false
     @State var isEmojiPickerPresented: Bool = false
     @State var isSymbolPickerPresented: Bool = false
+    @State var deleteAlertIsPresented = false
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var stateController: StateController
@@ -112,8 +113,7 @@ struct LocationView: View {
                     if isEditing {
                         ToolbarItem(placement: .topBarLeading) {
                             Button(role: .destructive) {
-                                stateController.removeLocation(project: project, location: location)
-                                self.dismiss()
+                                self.deleteAlertIsPresented = true
                             } label: {
                                 Image(systemName: "trash").foregroundColor(.red)
                             }
@@ -127,6 +127,20 @@ struct LocationView: View {
                             }
                         }
                     }
+                }
+                .alert(isPresented: $deleteAlertIsPresented) {
+                    
+                    Alert(title: Text("Delete"),
+                          message: Text("Are you sur you want to delete the location ?"),
+                          primaryButton: .cancel(),
+                          secondaryButton: .destructive(
+                            Text("Delete"),
+                            action: {
+                                stateController.removeLocation(project: project, location: location)
+                                self.dismiss()
+                            }
+                        )
+                    )
                 }
         }
     }

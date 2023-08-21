@@ -17,6 +17,8 @@ struct ProjectView: View {
         
     @State var isEditing: Bool = false
     
+    @State var deleteAlertIsPresented = false
+    
     private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
     
     var body: some View {
@@ -60,8 +62,7 @@ struct ProjectView: View {
                         
                         ToolbarItem(placement: .topBarLeading) {
                             Button(role: .destructive) {
-                                stateController.removeProject(project: self.project)
-                                self.dismiss()
+                                deleteAlertIsPresented = true
                             } label: {
                                 Image(systemName: "trash").foregroundColor(.red)
                             }
@@ -77,6 +78,18 @@ struct ProjectView: View {
                     }
                 }
                 .background(backgroundColor)
+                .alert(isPresented: $deleteAlertIsPresented) {
+                    
+                    Alert(title: Text("Delete"), message: Text("Are you sur you want to delete the project ?"), primaryButton: .cancel(),
+                        secondaryButton: .destructive(
+                            Text("Delete"),
+                            action: {
+                                stateController.removeProject(project: self.project)
+                                self.dismiss()
+                            }
+                        )
+                    )
+                }
         }
     }
 }
