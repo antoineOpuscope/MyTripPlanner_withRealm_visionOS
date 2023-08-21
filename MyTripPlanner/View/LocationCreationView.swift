@@ -21,10 +21,12 @@ struct LocationCreationView: View {
         
         let _ = print("newTappedCoordinate \(newTappedCoordinate)")
         
-        let location = Location(name: "", description: "", isFavorite: false, color: .green, price: 0, coordinate: self.newTappedCoordinate, icon: "mappin")
-        
         DefaultCreationView(name: $name, description: $description,
-                            saveAction: {stateController.addLocation(project: project, location: location)},
+                            saveAction: {
+            let location = Location(name: name, description: description, isFavorite: false, color: .green, price: 0, coordinate: self.newTappedCoordinate, icon: "mappin")
+
+            stateController.addLocation(project: project, location: location)
+        },
                             cancelAction: {}
         )
     }
