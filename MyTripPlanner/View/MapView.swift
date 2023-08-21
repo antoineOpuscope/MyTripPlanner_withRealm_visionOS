@@ -32,14 +32,7 @@ struct MapView: View {
         }
     }
         
-    @State private var cameraProsition: MapCameraPosition = .camera(
-            MapCamera(
-                centerCoordinate: CLLocationCoordinate2D(latitude: 48.858046588769085, longitude:  2.2949914738436776),
-                distance: 10000,
-                heading: 92,
-                pitch: 0
-            )
-        )
+    @State private var cameraProsition: MapCameraPosition
     
     init(project: Project, isContextMenuAllowed: Bool, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
         _project = ObservedObject(wrappedValue: project)
@@ -47,6 +40,21 @@ struct MapView: View {
         self.isContextMenuAllowed = isContextMenuAllowed
         //https://sarunw.com/posts/binding-initialization/
         _isAddingLocation = isAddingLocation
+        
+        var centerCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 48.858046588769085, longitude:  2.2949914738436776)
+        if let location {
+            centerCoordinate = location.coordinate
+        } else if let projectCenter = project.computeCenter() {
+            centerCoordinate = projectCenter
+        }
+        _cameraProsition = State(initialValue: .camera(
+                MapCamera(
+                    centerCoordinate: centerCoordinate,
+                    distance: 10000,
+                    heading: 92,
+                    pitch: 0
+                )
+            ))
     }
     
     var body: some View {
@@ -69,7 +77,9 @@ struct MapView: View {
                                 ForEach(project.pins, id:\.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
                                         NavigationLink {
-                                            LocationView(project: self.project, location: pin.location)
+                                            if isAddingLocation == false {
+                                                LocationView(project: self.project, location: pin.location)
+                                            }
                                         } label: {
                                             PinView(pin: pin)
                                                 .contextMenu(ContextMenu(menuItems: {
@@ -87,6 +97,7 @@ struct MapView: View {
                         .onTapGesture(perform: { screenCoord in
                             if self.isAddingLocation {
                                 if let tappedCoordinate = reader.convert(screenCoord, from: .local) {
+                                    isAddingLocation = false
                                     tappedCoordinates = Coordinate(tappedCoordinates: tappedCoordinate)
                                     self.isCreateLocationSheetPresented = true
                                 }

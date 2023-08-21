@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
 class Project: Identifiable, Codable, ObservableObject {
     var id = UUID()
@@ -20,6 +21,26 @@ class Project: Identifiable, Codable, ObservableObject {
     @Published var pins: [Pin] = []
     
     private var subscribers: Set<AnyCancellable> = []
+
+    func computeCenter() -> CLLocationCoordinate2D? {
+        let coordinates = locations.map({ $0.coordinate})
+        guard !coordinates.isEmpty else {
+            return nil
+        }
+        
+        var totalLatitude: Double = 0
+        var totalLongitude: Double = 0
+        
+        for coordinate in coordinates {
+            totalLatitude += coordinate.latitude
+            totalLongitude += coordinate.longitude
+        }
+        
+        let averageLatitude = totalLatitude / Double(coordinates.count)
+        let averageLongitude = totalLongitude / Double(coordinates.count)
+        
+        return CLLocationCoordinate2D(latitude: averageLatitude, longitude: averageLongitude)
+    }
     
     init(id: UUID = UUID(), name: String, description: String = "", tripDate: DateInterval? = nil, locations: [Location]) {
         self.id = id
