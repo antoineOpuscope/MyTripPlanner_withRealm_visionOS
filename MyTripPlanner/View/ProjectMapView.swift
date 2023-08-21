@@ -30,7 +30,7 @@ struct ProjectMapView: View {
                     }
                 if isAddingLocation {
                     VStack {
-                        Text("Tap on map to drop a new location")
+                        Label("Tap on map to drop a new location", systemImage: "hand.tap")
                             .font(.subheadline.bold())
                             .foregroundStyle(.white)
                             .padding()
