@@ -17,16 +17,29 @@ struct ProjectMapView: View {
         
     var body: some View {
         NavigationStack {
-            MapView(project: project, isContextMenuAllowed: true, isAddingLocation: $isAddingLocation)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            isAddingLocation.toggle()
-                        } label: {
-                            Image(systemName: "plus")
-                        }.disabled(isAddingLocation)
+            ZStack {
+                MapView(project: project, isContextMenuAllowed: true, isAddingLocation: $isAddingLocation)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                isAddingLocation.toggle()
+                            } label: {
+                                Image(systemName: "plus")
+                            }.disabled(isAddingLocation)
+                        }
                     }
-                }.navigationTitle("\(project.name)")
+                if isAddingLocation {
+                    VStack {
+                        Text("Tap on map to drop a new location")
+                            .font(.subheadline.bold())
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background(.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        Spacer()
+                    }.padding(.top)
+                }
+            }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
