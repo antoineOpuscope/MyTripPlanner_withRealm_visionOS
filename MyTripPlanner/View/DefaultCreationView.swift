@@ -24,7 +24,7 @@ struct DefaultCreationView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Project creation")
+                Text("Creation")
                     .font(.title)
                 HStack {
                     Text("Name : ")
