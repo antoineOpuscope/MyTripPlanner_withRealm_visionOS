@@ -67,7 +67,9 @@ struct MapView: View {
                             interactionModes: [.all]
                         )
                         {
-                            if let location {
+                            if isAddingLocation {
+                                
+                            } else if let location {
                                 ForEach([Pin(location: location)], id:\.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
                                         PinView(pin: pin)
@@ -77,9 +79,7 @@ struct MapView: View {
                                 ForEach(project.pins, id:\.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
                                         NavigationLink {
-                                            if isAddingLocation == false {
-                                                LocationView(project: self.project, location: pin.location)
-                                            }
+                                            LocationView(project: self.project, location: pin.location)
                                         } label: {
                                             PinView(pin: pin)
                                                 .contextMenu(ContextMenu(menuItems: {
