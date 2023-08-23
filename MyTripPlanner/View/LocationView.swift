@@ -102,7 +102,7 @@ struct LocationView: View {
             .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(isEditing)
                 .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
+                    ToolbarItem(placement: .confirmationAction) {
                         Button(isEditing ? "Save" : "Edit") {
                             isEditing.toggle()
                             if (isEditing == false) {
@@ -111,7 +111,7 @@ struct LocationView: View {
                         }
                     }
                     if isEditing {
-                        ToolbarItem(placement: .topBarLeading) {
+                        ToolbarItem(placement: .cancellationAction) {
                             Button(role: .destructive) {
                                 self.deleteAlertIsPresented = true
                             } label: {

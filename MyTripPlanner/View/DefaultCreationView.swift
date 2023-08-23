@@ -73,7 +73,7 @@ struct NavigationBarSaveCancel: ViewModifier {
     func body(content: Content) -> some View {
         content
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button {
                         saveAction()
                         self.dismiss()
@@ -81,7 +81,7 @@ struct NavigationBarSaveCancel: ViewModifier {
                         Text("Save")
                     }.disabled(isValideForm == false)
                 }
-                ToolbarItem(placement: .topBarLeading) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button {
                         cancelAction()
                         self.dismiss()
