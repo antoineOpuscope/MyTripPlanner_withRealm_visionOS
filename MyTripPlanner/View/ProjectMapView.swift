@@ -36,6 +36,16 @@ struct ProjectMapView: View {
                                 Image(systemName: "plus")
                             }.disabled(isAddingLocation || isSearchingLocation)
                         }
+                        if isSearchingLocation || isAddingLocation {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button {
+                                    isSearchingLocation = false
+                                    isAddingLocation = false
+                                } label: {
+                                    Text("Cancel")
+                                }
+                            }
+                        }
                     }
                 if isAddingLocation {
                     VStack {
@@ -48,8 +58,12 @@ struct ProjectMapView: View {
                         Spacer()
                     }.padding(.top)
                 }
+                if isSearchingLocation {
+                    SearchingLocationView()
+                }
             }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarBackButtonHidden(isSearchingLocation || isAddingLocation)
         }
     }
 }
