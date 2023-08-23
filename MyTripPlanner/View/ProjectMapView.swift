@@ -14,6 +14,7 @@ struct ProjectMapView: View {
     @EnvironmentObject private var stateController: StateController
     
     @State private var isAddingLocation: Bool = false
+    @State private var isSearchingLocation: Bool = false
         
     var body: some View {
         NavigationStack {
@@ -22,10 +23,18 @@ struct ProjectMapView: View {
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             Button {
+                                isSearchingLocation.toggle()
+                            } label: {
+                                Image(systemName: "magnifyingglass")
+                            }.disabled(isAddingLocation || isSearchingLocation)
+                        }
+                        
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
                                 isAddingLocation.toggle()
                             } label: {
                                 Image(systemName: "plus")
-                            }.disabled(isAddingLocation)
+                            }.disabled(isAddingLocation || isSearchingLocation)
                         }
                     }
                 if isAddingLocation {
