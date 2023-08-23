@@ -8,10 +8,23 @@
 import SwiftUI
 
 struct SearchingLocationView: View {
+    
+    @State private var searchText: String = ""
+    
     var body: some View {
-        Group {
-            Color.pink
-        }.ignoresSafeArea()
+        VStack {
+            HStack(spacing: 10) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                TextField("Search", text: $searchText)
+            }.padding(10)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(.gray)
+                )
+            Spacer()
+        }.padding()
+            .background(.white)
     }
 }
 
