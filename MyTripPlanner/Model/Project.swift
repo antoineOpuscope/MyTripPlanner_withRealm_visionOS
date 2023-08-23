@@ -49,7 +49,6 @@ class Project: Identifiable, Codable, ObservableObject {
         self.tripDate = tripDate
         self.locations = locations
         self.creationDate = Date()
-        self.pins = locations.map {Pin(location: $0)}
         
         $locations.sink { locations in
             self.pins = locations.map {Pin(location: $0)}
@@ -73,7 +72,6 @@ class Project: Identifiable, Codable, ObservableObject {
         tripDate = try container.decodeIfPresent(DateInterval.self, forKey: .tripDate)
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         locations = try container.decode([Location].self, forKey: .locations)
-        pins = locations.map {Pin(location: $0)}
 
         $locations.sink { locations in
             self.pins = locations.map {Pin(location: $0)}
