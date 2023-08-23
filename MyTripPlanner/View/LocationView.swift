@@ -8,6 +8,7 @@
 import SwiftUI
 import SymbolPicker
 import EmojiPicker
+import Combine
 import CoreLocation
 
 struct LocationView: View {
@@ -22,6 +23,11 @@ struct LocationView: View {
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject private var stateController: StateController
 
+    @State var placemark: CLPlacemark?
+    
+    
+    let geoCoder = CLGeocoder()
+    
     let latitude = 7.065306
     let longitude = 125.607833
     
@@ -74,6 +80,13 @@ struct LocationView: View {
                     Section {
                         TextField("Name", text: $location.name)
                             .disabled(isEditing == false)
+                        if let placemark = self.placemark {
+                            Text("\(placemark.name ?? ""), \(placemark.locality ?? ""), \(placemark.country ?? "")")
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        } else {
+                            ProgressView()
+                        }
                     } header: {
                         Text("Name")
                     }
@@ -141,6 +154,14 @@ struct LocationView: View {
                             }
                         )
                     )
+                }
+                .onAppear {
+                    location.$coordinate.sink { coordinate in
+                        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+                        self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                            self.placemark = placemarks?.first
+                        })
+                    }
                 }
         }
     }
