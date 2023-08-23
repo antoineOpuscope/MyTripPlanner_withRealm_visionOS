@@ -72,7 +72,8 @@ class Project: Identifiable, Codable, ObservableObject {
         tripDate = try container.decodeIfPresent(DateInterval.self, forKey: .tripDate)
         creationDate = try container.decode(Date.self, forKey: .creationDate)
         locations = try container.decode([Location].self, forKey: .locations)
-
+        
+        // AOM - Maybe it should be in the view
         $locations.sink { locations in
             self.pins = locations.map {Pin(location: $0)}
         }.store(in: &subscribers)
