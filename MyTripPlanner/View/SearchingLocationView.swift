@@ -56,7 +56,7 @@ struct SearchingLocationView: View {
                                     )
                                 )
                             }
-                            print(place.locality)
+                            print("Close search + teleport to \(place.name), \(place.country)")
                         }
                     }
                 }
