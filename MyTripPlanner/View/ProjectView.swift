@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _MapKit_SwiftUI
 
 struct ProjectView: View {
     
@@ -21,13 +22,29 @@ struct ProjectView: View {
     
     private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
     
+    @State var centerPosition: MapCameraPosition
+    
+    init(project: Project) {
+        self.project = project
+        _centerPosition = State(initialValue:
+                .camera(
+                        MapCamera(
+                            centerCoordinate: project.computeCenter() ?? CLLocationCoordinate2D(latitude: 0, longitude: 0),
+                            distance: 10000,
+                            heading: 92,
+                            pitch: 0
+                        )
+                    )
+        )
+    }
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
                 NavigationLink {
-                    ProjectMapView(project: self.project)
+                    ProjectMapView(project: self.project, centerPosition: $centerPosition)
                 } label: {
-                    MapView(project: project, isContextMenuAllowed: false)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition)
                         .allowsHitTesting(false)
                         .frame(height: 200)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
@@ -95,7 +112,16 @@ struct ProjectView: View {
 }
 
 struct ProjectView_Previews: PreviewProvider {
+    struct Preview: View {
+        @State private var centerPosition: MapCameraPosition = .automatic
+
+        var body: some View {
+            ProjectView(project: TestData.project)
+        }
+    }
+
     static var previews: some View {
-        ProjectView(project: TestData.project)
+        Preview()
     }
 }
+

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import _MapKit_SwiftUI
 
 struct ProjectMapView: View {
     
@@ -15,11 +16,13 @@ struct ProjectMapView: View {
     
     @State private var isAddingLocation: Bool = false
     @State private var isSearchingLocation: Bool = false
-        
+    
+    @Binding var centerPosition: MapCameraPosition
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                MapView(project: project, isContextMenuAllowed: true, isAddingLocation: $isAddingLocation)
+                MapView(project: project, isContextMenuAllowed: true, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation)
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             Button {
@@ -59,7 +62,7 @@ struct ProjectMapView: View {
                     }.padding(.top)
                 }
                 if isSearchingLocation {
-                    SearchingLocationView(isSearchingLocation: $isSearchingLocation)
+                    SearchingLocationView(isSearchingLocation: $isSearchingLocation, centerPosition: $centerPosition)
                 }
             }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
@@ -68,7 +71,18 @@ struct ProjectMapView: View {
     }
 }
 
-#Preview {
-    ProjectMapView(project: TestData.project)
-        .environmentObject(LocationManager())
+
+struct ProjectMapView_Previews: PreviewProvider {
+    struct Preview: View {
+        @State private var centerPosition: MapCameraPosition = .automatic
+
+        var body: some View {
+            ProjectMapView(project: TestData.project, centerPosition: $centerPosition)
+                .environmentObject(LocationManager())
+        }
+    }
+
+    static var previews: some View {
+        Preview()
+    }
 }

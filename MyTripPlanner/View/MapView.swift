@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import Combine
 
 struct MapView: View {
         
@@ -32,29 +33,16 @@ struct MapView: View {
         }
     }
         
-    @State private var cameraProsition: MapCameraPosition
+    @Binding private var cameraPosition: MapCameraPosition
     
-    init(project: Project, isContextMenuAllowed: Bool, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
+    init(project: Project, isContextMenuAllowed: Bool, cameraPosition: Binding<MapCameraPosition>, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
         _project = ObservedObject(wrappedValue: project)
         self.location = location
         self.isContextMenuAllowed = isContextMenuAllowed
         //https://sarunw.com/posts/binding-initialization/
         _isAddingLocation = isAddingLocation
         
-        var centerCoordinate: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 48.858046588769085, longitude:  2.2949914738436776)
-        if let location {
-            centerCoordinate = location.coordinate
-        } else if let projectCenter = project.computeCenter() {
-            centerCoordinate = projectCenter
-        }
-        _cameraProsition = State(initialValue: .camera(
-                MapCamera(
-                    centerCoordinate: centerCoordinate,
-                    distance: 10000,
-                    heading: 92,
-                    pitch: 0
-                )
-            ))
+        _cameraPosition = cameraPosition
     }
     
     var body: some View {
@@ -63,7 +51,7 @@ struct MapView: View {
                 MapReader { reader in
                     ZStack {
                         Map(
-                            position: $cameraProsition,
+                            position: $cameraPosition,
                             interactionModes: [.all]
                         )
                         {
@@ -113,7 +101,6 @@ struct MapView: View {
                                     .environmentObject(stateController)
                             }
                         }
-                        
                     }
                 }
             }
@@ -121,8 +108,18 @@ struct MapView: View {
     }
 }
 
+
 struct MapView_Previews: PreviewProvider {
+    struct Preview: View {
+        @StateObject private var locationManager = LocationManager()
+        @State private var cameraPosition: MapCameraPosition = .automatic
+
+        var body: some View {
+            MapView(project: TestData.project, isContextMenuAllowed: true, cameraPosition: $cameraPosition)
+        }
+    }
+
     static var previews: some View {
-        MapView(project: TestData.project, isContextMenuAllowed: true)
+        Preview()
     }
 }

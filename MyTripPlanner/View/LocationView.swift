@@ -10,6 +10,7 @@ import SymbolPicker
 import EmojiPicker
 import Combine
 import CoreLocation
+import _MapKit_SwiftUI
 
 struct LocationView: View {
     @ObservedObject var project: Project
@@ -25,19 +26,38 @@ struct LocationView: View {
 
     @State var placemark: CLPlacemark?
     
+    @State var centerPosition: MapCameraPosition
     
     let geoCoder = CLGeocoder()
     
     let latitude = 7.065306
     let longitude = 125.607833
     
+    
+    
+    init(project: Project,  location: Location) {
+        self.project = project
+        self.location = location
+        _centerPosition = State(initialValue:
+            .camera(
+                    MapCamera(
+                        centerCoordinate: location.coordinate,
+                        distance: 10000,
+                        heading: 92,
+                        pitch: 0
+                    )
+                )
+        )
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
+                
                 NavigationLink {
-                    MapView(project: project, isContextMenuAllowed: false, location: location)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, location: location)
                 } label: {
-                    MapView(project: project, isContextMenuAllowed: false, location: location)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, location: location)
                         .allowsHitTesting(false)
                         .frame(height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 30))

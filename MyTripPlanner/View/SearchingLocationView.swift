@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import _MapKit_SwiftUI
 
 struct SearchingLocationView: View {
         
     @EnvironmentObject private var locationManager: LocationManager
     
     @Binding var isSearchingLocation: Bool
+    @Binding var centerPosition: MapCameraPosition
     
     var body: some View {
         VStack {
@@ -42,6 +44,16 @@ struct SearchingLocationView: View {
                             }
                         }.onTapGesture {
                             isSearchingLocation = false
+                            if let coordinate = place.location?.coordinate {
+                                centerPosition = .camera(
+                                    MapCamera(
+                                        centerCoordinate: coordinate,
+                                        distance: 10000,
+                                        heading: 92,
+                                        pitch: 0
+                                    )
+                                )
+                            }
                             print(place.locality)
                         }
                     }
@@ -56,9 +68,10 @@ struct SearchingLocationView_Previews: PreviewProvider {
     struct Preview: View {
         @StateObject private var locationManager = LocationManager()
         @State private var isSearchingLocation = false
+        @State var centerPosition: MapCameraPosition = .automatic
 
         var body: some View {
-            SearchingLocationView(isSearchingLocation: $isSearchingLocation)
+            SearchingLocationView(isSearchingLocation: $isSearchingLocation, centerPosition: $centerPosition)
             .environmentObject(locationManager)
         }
     }
