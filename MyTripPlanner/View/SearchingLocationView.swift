@@ -11,6 +11,8 @@ struct SearchingLocationView: View {
         
     @EnvironmentObject private var locationManager: LocationManager
     
+    @Binding var isSearchingLocation: Bool
+    
     var body: some View {
         VStack {
             HStack(spacing: 10) {
@@ -38,6 +40,9 @@ struct SearchingLocationView: View {
                                     .font(.caption)
                                     .foregroundStyle(.gray)
                             }
+                        }.onTapGesture {
+                            isSearchingLocation = false
+                            print(place.locality)
                         }
                     }
                 }
@@ -47,7 +52,18 @@ struct SearchingLocationView: View {
     }
 }
 
-#Preview {
-    SearchingLocationView()
-        .environmentObject(LocationManager())
+struct SearchingLocationView_Previews: PreviewProvider {
+    struct Preview: View {
+        @StateObject private var locationManager = LocationManager()
+        @State private var isSearchingLocation = false
+
+        var body: some View {
+            SearchingLocationView(isSearchingLocation: $isSearchingLocation)
+            .environmentObject(locationManager)
+        }
+    }
+
+    static var previews: some View {
+        Preview()
+    }
 }

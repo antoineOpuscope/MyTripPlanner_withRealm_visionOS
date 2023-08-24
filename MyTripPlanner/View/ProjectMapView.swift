@@ -59,7 +59,7 @@ struct ProjectMapView: View {
                     }.padding(.top)
                 }
                 if isSearchingLocation {
-                    SearchingLocationView()
+                    SearchingLocationView(isSearchingLocation: $isSearchingLocation)
                 }
             }.navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
