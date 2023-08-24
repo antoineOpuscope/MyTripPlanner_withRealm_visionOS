@@ -46,11 +46,15 @@ struct SearchingLocationView: View {
                             }
                         }.onTapGesture {
                             isSearchingLocation = false
-                            if let coordinate = place.location?.coordinate {
+                            if let location = place.location {
+                                
+                                let coordinate = location.coordinate
+                                var distance: Double =  place.getPerfectDistance()
+                                    
                                 centerPosition = .camera(
                                     MapCamera(
                                         centerCoordinate: coordinate,
-                                        distance: 10000,
+                                        distance: distance,
                                         heading: 92,
                                         pitch: 0
                                     )

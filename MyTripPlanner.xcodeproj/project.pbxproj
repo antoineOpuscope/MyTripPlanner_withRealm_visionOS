@@ -30,6 +30,7 @@
 		11B40B442A960B88002D5C84 /* AllProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B432A960B88002D5C84 /* AllProjectsView.swift */; };
 		11B40B462A965C57002D5C84 /* SearchingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B452A965C57002D5C84 /* SearchingLocationView.swift */; };
 		11B40B492A9663F8002D5C84 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B482A9663F8002D5C84 /* LocationManager.swift */; };
+		11B40B4B2A97ADDB002D5C84 /* ExtensionPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B4A2A97ADDB002D5C84 /* ExtensionPlacemark.swift */; };
 		11EB0C372A868AE50060E253 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C362A868AE50060E253 /* StorageController.swift */; };
 		11EB0C392A868D710060E253 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C382A868D710060E253 /* StateController.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +58,7 @@
 		11B40B432A960B88002D5C84 /* AllProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsView.swift; sourceTree = "<group>"; };
 		11B40B452A965C57002D5C84 /* SearchingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingLocationView.swift; sourceTree = "<group>"; };
 		11B40B482A9663F8002D5C84 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		11B40B4A2A97ADDB002D5C84 /* ExtensionPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionPlacemark.swift; sourceTree = "<group>"; };
 		11EB0C362A868AE50060E253 /* StorageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		11EB0C382A868D710060E253 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 				1129F9BA2A81424400E3374A /* ImagePicker.swift */,
 				1129F9BC2A81427B00E3374A /* Bundle-Decodable.swift */,
 				11A154DA2A8A355900BA65DF /* TestData.swift */,
+				11B40B4A2A97ADDB002D5C84 /* ExtensionPlacemark.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 				1129F9B32A813F2300E3374A /* ProjectView.swift in Sources */,
 				11A154DF2A8CD5B600BA65DF /* ProjectMapView.swift in Sources */,
 				11A154F22A8FAFB200BA65DF /* Pin.swift in Sources */,
+				11B40B4B2A97ADDB002D5C84 /* ExtensionPlacemark.swift in Sources */,
 				11B40B442A960B88002D5C84 /* AllProjectsView.swift in Sources */,
 				1129F9B52A813F4900E3374A /* MapView.swift in Sources */,
 				11A154E32A8CEEB900BA65DF /* DefaultCreationView.swift in Sources */,

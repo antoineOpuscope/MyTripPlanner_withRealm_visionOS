@@ -114,9 +114,15 @@ struct ProjectView: View {
 struct ProjectView_Previews: PreviewProvider {
     struct Preview: View {
         @State private var centerPosition: MapCameraPosition = .automatic
+        
+        @StateObject var locationManager = LocationManager()
+        @StateObject var stateController = StateController()
+        
 
         var body: some View {
             ProjectView(project: TestData.project)
+                .environmentObject(locationManager)
+                .environmentObject(stateController)
         }
     }
 
