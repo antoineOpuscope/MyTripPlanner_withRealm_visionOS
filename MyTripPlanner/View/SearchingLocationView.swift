@@ -21,6 +21,8 @@ struct SearchingLocationView: View {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(.gray)
                 TextField("Search", text: $locationManager.searchText)
+                    .autocorrectionDisabled()
+                    .textInputAutocapitalization(.never)
             }.padding(10)
                 .background(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
