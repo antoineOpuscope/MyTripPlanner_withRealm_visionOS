@@ -170,5 +170,6 @@ struct LocationView: View {
 struct LocationView_Previews: PreviewProvider {
     static var previews: some View {
         LocationView(project: TestData.project, location: TestData.location1)
+            .environmentObject(LocationManager())
     }
 }

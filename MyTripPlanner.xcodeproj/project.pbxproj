@@ -29,6 +29,7 @@
 		11A154F22A8FAFB200BA65DF /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A154F12A8FAFB200BA65DF /* Pin.swift */; };
 		11B40B442A960B88002D5C84 /* AllProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B432A960B88002D5C84 /* AllProjectsView.swift */; };
 		11B40B462A965C57002D5C84 /* SearchingLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B452A965C57002D5C84 /* SearchingLocationView.swift */; };
+		11B40B492A9663F8002D5C84 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B482A9663F8002D5C84 /* LocationManager.swift */; };
 		11EB0C372A868AE50060E253 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C362A868AE50060E253 /* StorageController.swift */; };
 		11EB0C392A868D710060E253 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C382A868D710060E253 /* StateController.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		11A154F12A8FAFB200BA65DF /* Pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		11B40B432A960B88002D5C84 /* AllProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllProjectsView.swift; sourceTree = "<group>"; };
 		11B40B452A965C57002D5C84 /* SearchingLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingLocationView.swift; sourceTree = "<group>"; };
+		11B40B482A9663F8002D5C84 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		11EB0C362A868AE50060E253 /* StorageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		11EB0C382A868D710060E253 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +93,7 @@
 		1129F9A32A81381900E3374A /* MyTripPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				11B40B472A9663E7002D5C84 /* Manager */,
 				11EB0C352A868AD60060E253 /* Controller */,
 				1129F9C02A8142D300E3374A /* View */,
 				1129F9BF2A8142C800E3374A /* Model */,
@@ -146,6 +149,14 @@
 				11B40B452A965C57002D5C84 /* SearchingLocationView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		11B40B472A9663E7002D5C84 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				11B40B482A9663F8002D5C84 /* LocationManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		11EB0C352A868AD60060E253 /* Controller */ = {
@@ -252,6 +263,7 @@
 				1129F9C62A8232A200E3374A /* Project.swift in Sources */,
 				1129F9A72A81381900E3374A /* ContentView.swift in Sources */,
 				11A154DD2A8CBE3A00BA65DF /* ProjectCreationView.swift in Sources */,
+				11B40B492A9663F8002D5C84 /* LocationManager.swift in Sources */,
 				11EB0C372A868AE50060E253 /* StorageController.swift in Sources */,
 				1129F9C82A82340000E3374A /* Location.swift in Sources */,
 				1129F9A52A81381900E3374A /* MyTripPlannerApp.swift in Sources */,
@@ -387,6 +399,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -418,6 +431,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

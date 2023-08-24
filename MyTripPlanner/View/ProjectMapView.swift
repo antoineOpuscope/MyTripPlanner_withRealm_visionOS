@@ -70,4 +70,5 @@ struct ProjectMapView: View {
 
 #Preview {
     ProjectMapView(project: TestData.project)
+        .environmentObject(LocationManager())
 }
