@@ -85,12 +85,22 @@ struct AllProjectsView: View {
                           secondaryButton: .default(
                             Text("Confirm"),
                             action: {
-                                
+                                let project: Project = mergeSelectedProjects()
+                                stateController.addProject(project: project)
+                                self.isMergingProjects = false
                             }
                         )
                     )
                 }
         }
+    }
+    
+    func mergeSelectedProjects() -> Project {
+        let selectedProjects: [Project] = stateController.projects.filter {multiSelection.contains($0.id)}
+        
+        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: selectedProjects.flatMap{$0.locations})
+        
+        return project
     }
 }
 
