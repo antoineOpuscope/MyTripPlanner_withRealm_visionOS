@@ -61,10 +61,11 @@ struct AllProjectsView: View {
                     }
                     ToolbarItem(placement: .topBarLeading) {
                         if isMergingProjects && self.multiSelection.count >= 2 {
-                            Button("arrow.triangle.merge", systemImage: "checkmark") {
-                                
-                                //
+                            Button {
                                 self.isPresentedMergeConfirmationAlert = true
+                            } label: {
+                                Image(systemName: "checkmark")
+                                    .foregroundStyle(.green)
                             }
                         }
                     }
