@@ -10,7 +10,7 @@ import SymbolPicker
 import EmojiPicker
 import Combine
 import CoreLocation
-import _MapKit_SwiftUI
+import MapKit
 
 struct LocationView: View {
     @ObservedObject var project: Project

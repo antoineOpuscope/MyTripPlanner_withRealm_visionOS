@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreLocation
-import _MapKit_SwiftUI
+import MapKit
 
 struct ProjectMapView: View {
     
