@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct AllProjectsView: View {
     
@@ -98,7 +99,18 @@ struct AllProjectsView: View {
     func mergeSelectedProjects() -> Project {
         let selectedProjects: [Project] = stateController.projects.filter {multiSelection.contains($0.id)}
         
-        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: selectedProjects.flatMap{$0.locations})
+        // Create a set to store unique coordinates
+        var uniqueCoordinates = Set<CLLocationCoordinate2D>()
+
+        // Use flatMap to extract all Location objects from the projects
+        let allUniqueLocations = selectedProjects.flatMap { project in
+            project.locations.filter {
+                // Insert the coordinate into the set, and only keep the location if it's unique
+                uniqueCoordinates.insert($0.coordinate).inserted
+            }
+        }
+        
+        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocations)
         
         return project
     }
