@@ -59,7 +59,7 @@ struct ProjectView: View {
                         Text("Name")
                     }
                     Section {
-                        TextField("Description", text: $project.description)
+                        TextField("Description", text: $project.description, axis: .vertical)
                             .disabled(isEditing == false)
                     } header: {
                         Text("Description")
