@@ -28,6 +28,18 @@ class Location: Identifiable, Codable, ObservableObject {
         case coordinateLongitude = "longitude"
     }
     
+    // Nouvel initialiseur pour créer une copie profonde avec un nouvel ID
+    init(copying location: Location) {
+        self.id = UUID() // Nouvel ID
+        self.name = location.name
+        self.description = location.description
+        self.isFavorite = location.isFavorite
+        self.color = location.color
+        self.price = location.price
+        self.coordinate = location.coordinate
+        self.icon = location.icon
+    }
+    
     init(id: UUID = UUID(), name: String, description: String, isFavorite: Bool, color: Color, price: Float, coordinate: CLLocationCoordinate2D, icon: String) {
         self.id = id
         self.name = name

@@ -31,8 +31,9 @@ class StateController: ObservableObject {
                 uniqueCoordinates.insert($0.coordinate).inserted
             }
         }
+        let allUniqueLocationDeepCopy = allUniqueLocations.map {Location(copying: $0)}
         
-        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocations)
+        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocationDeepCopy)
         
         self.addProject(project: project)
     }
