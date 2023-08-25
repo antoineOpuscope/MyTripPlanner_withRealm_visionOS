@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class StateController: ObservableObject {
 	@Published var projects: [Project]
@@ -16,6 +17,25 @@ class StateController: ObservableObject {
 	init() {
 		self.projects = storageController.fetchProject()
 	}
+    
+    func mergeSelectedProjects(selectedProject: Set<UUID>) {
+        let selectedProjects: [Project] = self.projects.filter {selectedProject.contains($0.id)}
+        
+        // Create a set to store unique coordinates
+        var uniqueCoordinates = Set<CLLocationCoordinate2D>()
+
+        // Use flatMap to extract all Location objects from the projects
+        let allUniqueLocations = selectedProjects.flatMap { project in
+            project.locations.filter {
+                // Insert the coordinate into the set, and only keep the location if it's unique
+                uniqueCoordinates.insert($0.coordinate).inserted
+            }
+        }
+        
+        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocations)
+        
+        self.addProject(project: project)
+    }
     
     func addProject(project: Project) {
         projects.append(project)
