@@ -5,7 +5,7 @@
 //  Created by Antoine Omnès on 25/08/2023.
 //
 
-import Foundations
+import Foundation
 import CoreLocation
 
 extension CLLocationCoordinate2D: Hashable {
