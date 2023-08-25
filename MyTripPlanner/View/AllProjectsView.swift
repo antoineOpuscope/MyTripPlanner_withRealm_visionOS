@@ -32,7 +32,7 @@ struct AllProjectsView: View {
                         
                     }
                 }
-            }.navigationTitle("Projects")
+            }.navigationTitle("\(isMergingProjects ? "Merging " : "")Projects")
                 .navigationBarTitleDisplayMode(.inline)
                 .environment(\.editMode, .constant(self.isMergingProjects ? EditMode.active : EditMode.inactive))
                 .toolbar {
