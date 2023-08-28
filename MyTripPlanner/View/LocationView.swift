@@ -33,7 +33,7 @@ struct LocationView: View {
     let latitude = 7.065306
     let longitude = 125.607833
     
-    @State var cancellable = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
 
     init(project: Project,  location: Location) {
         self.project = project
