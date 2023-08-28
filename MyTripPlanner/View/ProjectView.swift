@@ -25,17 +25,12 @@ struct ProjectView: View {
     
     @State var centerPosition: MapCameraPosition
     
+    let frameSize: CGSize = .init(width: 350, height: 300)
+    
     init(project: Project) {
         self.project = project
         _centerPosition = State(initialValue:
-                .camera(
-                        MapCamera(
-                            centerCoordinate: project.computeCenter() ?? CLLocationCoordinate2D(latitude: 0, longitude: 0),
-                            distance: 10000,
-                            heading: 92,
-                            pitch: 0
-                        )
-                    )
+                .region(MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, zoomPercentage: 0, frameSize: frameSize) ?? MKCoordinateRegion.init(center: .init(latitude: 0, longitude: 0), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
         )
     }
     
@@ -47,7 +42,7 @@ struct ProjectView: View {
                 } label: {
                     MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition)
                         .allowsHitTesting(false)
-                        .frame(height: 200)
+                        .frame(height: frameSize.height)
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                         .shadow(radius: 10)
                 }.padding(.horizontal)
