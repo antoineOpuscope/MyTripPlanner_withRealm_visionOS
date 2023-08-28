@@ -12,6 +12,8 @@ import CoreLocation
 class StateController: ObservableObject {
 	@Published var projects: [Project]
 	
+    // TODO: create a list location in StateController and Project will contains only locations Ids
+    
 	private let storageController = StorageController()
 	
 	init() {

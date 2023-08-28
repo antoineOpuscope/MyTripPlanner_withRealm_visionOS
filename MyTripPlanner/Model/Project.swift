@@ -17,6 +17,7 @@ class Project: Identifiable, Codable, ObservableObject {
     @Published var tripDate: DateInterval? = nil
     @Published var creationDate: Date
     
+    // TODO keep only the id of location and create a list location in StateController
     @Published var locations: [Location] = []
     @Published var pins: [Pin] = []
     
