@@ -92,16 +92,20 @@ struct ProjectView: View {
                 }
                 .onAppear() {
                     // AOM - not possible to set in init because locationManager is not available
-                    if self.centerPosition.camera?.centerCoordinate.latitude == 0 &&
-                        self.centerPosition.camera?.centerCoordinate.longitude == 0 {
+                    
+                    let region = MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, frameSize: frameSize)
+                    let zeroCoordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+                    if  project.locations.isEmpty {
                         self.centerPosition = .camera(
                                         MapCamera(
-                                            centerCoordinate: locationManager.userLocation ?? CLLocationCoordinate2D(latitude: 0, longitude: 0),
+                                            centerCoordinate: locationManager.userLocation ?? zeroCoordinate,
                                             distance: 10000,
                                             heading: 92,
                                             pitch: 0
                                         )
                                     )
+                    } else if let region = region {
+                        self.centerPosition = .region(region)
                     }
                 }
                 .background(backgroundColor)
