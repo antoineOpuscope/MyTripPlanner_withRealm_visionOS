@@ -30,7 +30,7 @@ struct LocationView: View {
     
     let geoCoder = CLGeocoder()
     
-    private var cancellable = Set<AnyCancellable>()
+    @State private var cancellable = Set<AnyCancellable>()
 
     init(project: Project,  location: Location) {
         self.project = project
