@@ -18,12 +18,16 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     
     @Published var fetchedPlaces: [CLPlacemark]? = nil
     
+    // Only updated once
+    @Published var userLocation: CLLocationCoordinate2D? = nil
+    
     override init() {
         super.init()
         mapView.delegate = self
         manager.delegate = self
         
         manager.requestWhenInUseAuthorization()
+        manager.requestLocation()
         
         cancellable = $searchText
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
@@ -63,7 +67,9 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let _ = locations.last else {return}
+        if let location = locations.last {
+            self.userLocation = location.coordinate
+        }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

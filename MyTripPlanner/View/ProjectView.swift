@@ -13,6 +13,7 @@ struct ProjectView: View {
     @ObservedObject var project: Project
     
     @EnvironmentObject private var stateController: StateController
+    @EnvironmentObject private var locationManager: LocationManager
     
     @Environment(\.dismiss) private var dismiss
         
@@ -92,6 +93,20 @@ struct ProjectView: View {
                                 stateController.updateProject(project: project)
                             }
                         }
+                    }
+                }
+                .onAppear() {
+                    // AOM - not possible to set in init because locationManager is not available
+                    if self.centerPosition.camera?.centerCoordinate.latitude == 0 &&
+                        self.centerPosition.camera?.centerCoordinate.longitude == 0 {
+                        self.centerPosition = .camera(
+                                        MapCamera(
+                                            centerCoordinate: locationManager.userLocation ?? CLLocationCoordinate2D(latitude: 0, longitude: 0),
+                                            distance: 10000,
+                                            heading: 92,
+                                            pitch: 0
+                                        )
+                                    )
                     }
                 }
                 .background(backgroundColor)
