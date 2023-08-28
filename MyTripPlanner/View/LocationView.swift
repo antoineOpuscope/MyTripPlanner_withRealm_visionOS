@@ -47,6 +47,19 @@ struct LocationView: View {
         )
     }
     
+    var icon: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: 30, height: 30)
+                .foregroundColor(location.color)
+            
+            Image(systemName: location.icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 20, height: 20)
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -64,16 +77,7 @@ struct LocationView: View {
                 Form {
                     Section {
                         HStack {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .frame(width: 30, height: 30)
-                                    .foregroundColor(location.color)
-                                
-                                Image(systemName: location.icon)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 20, height: 20)
-                            }
+                            icon
                             Spacer()
                             if (isEditing) {
                                 ColorPicker("Color", selection: $location.color)
