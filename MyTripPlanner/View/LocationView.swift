@@ -30,9 +30,6 @@ struct LocationView: View {
     
     let geoCoder = CLGeocoder()
     
-    let latitude = 7.065306
-    let longitude = 125.607833
-    
     private var cancellable = Set<AnyCancellable>()
 
     init(project: Project,  location: Location) {
