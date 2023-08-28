@@ -116,7 +116,7 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        if let url = URL(string: "maps://?saddr=&daddr=\(latitude),\(longitude)") {
+                        if let url = URL(string: "maps://?saddr=&daddr=\(location.coordinate.latitude),\(location.coordinate.longitude)") {
                             Link("Open with GPS", destination: url)
                         }
                         
