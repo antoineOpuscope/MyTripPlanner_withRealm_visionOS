@@ -9,13 +9,15 @@ import Foundation
 import MapKit
 import SwiftUI
 
+
+// inspired by https://gist.github.com/dionc/46f7e7ee9db7dbd7bddec56bd5418ca6 and usage of chatGPT
 extension MKCoordinateRegion {
     
-    // Initialisateur pour prendre en compte la taille de la vue
-    init?(coordinates: [CLLocationCoordinate2D], zoomPercentage: Double, frameSize: CGSize) {
-        let primeRegion = MKCoordinateRegion.region(for: coordinates, transform: { $0 }, inverseTransform: { $0 }, zoomPercentage: zoomPercentage)
+    // Initializer to account for the view's size
+    init?(coordinates: [CLLocationCoordinate2D], frameSize: CGSize) {
+        let primeRegion = MKCoordinateRegion.region(for: coordinates, transform: { $0 }, inverseTransform: { $0 })
         
-        let transformedRegion = MKCoordinateRegion.region(for: coordinates, transform: MKCoordinateRegion.transform, inverseTransform: MKCoordinateRegion.inverseTransform, zoomPercentage: zoomPercentage)
+        let transformedRegion = MKCoordinateRegion.region(for: coordinates, transform: MKCoordinateRegion.transform, inverseTransform: MKCoordinateRegion.inverseTransform)
         
         if let a = primeRegion,
             let b = transformedRegion,
@@ -35,8 +37,8 @@ extension MKCoordinateRegion {
         let frameWidthDelta = span.longitudeDelta * (frameSize.width / 360)
         let frameHeightDelta = span.latitudeDelta * (frameSize.height / 180)
         
-        let adjustedLatitudeDelta = span.latitudeDelta * (1 + zoomPercentage / 100) + frameHeightDelta
-        let adjustedLongitudeDelta = span.longitudeDelta * (1 + zoomPercentage / 100) + frameWidthDelta
+        let adjustedLatitudeDelta = span.latitudeDelta + frameHeightDelta
+        let adjustedLongitudeDelta = span.longitudeDelta + frameWidthDelta
         
         let adjustedSpan = MKCoordinateSpan(latitudeDelta: adjustedLatitudeDelta, longitudeDelta: adjustedLongitudeDelta)
         
@@ -57,7 +59,7 @@ extension MKCoordinateRegion {
     
     private typealias Transform = (CLLocationCoordinate2D) -> (CLLocationCoordinate2D)
     
-    private static func region(for coordinates: [CLLocationCoordinate2D], transform: Transform, inverseTransform: Transform, zoomPercentage: Double) -> MKCoordinateRegion? {
+    private static func region(for coordinates: [CLLocationCoordinate2D], transform: Transform, inverseTransform: Transform) -> MKCoordinateRegion? {
         
         // handle empty array
         guard !coordinates.isEmpty else { return nil }
@@ -79,12 +81,6 @@ extension MKCoordinateRegion {
         // find the center of the span
         let center = inverseTransform(CLLocationCoordinate2D(latitude: maxLat - span.latitudeDelta / 2, longitude: maxLon - span.longitudeDelta / 2))
         
-        // Adjust the span by zoom percentage
-        let adjustedLatitudeDelta = span.latitudeDelta * (1 + zoomPercentage / 100)
-        let adjustedLongitudeDelta = span.longitudeDelta * (1 + zoomPercentage / 100)
-        
-        let adjustedSpan = MKCoordinateSpan(latitudeDelta: adjustedLatitudeDelta, longitudeDelta: adjustedLongitudeDelta)
-        
-        return MKCoordinateRegion(center: center, span: adjustedSpan)
+        return MKCoordinateRegion(center: center, span: span)
     }
 }
