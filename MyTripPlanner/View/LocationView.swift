@@ -33,8 +33,8 @@ struct LocationView: View {
     let latitude = 7.065306
     let longitude = 125.607833
     
-    
-    
+    @State var cancellable = Set<AnyCancellable>()
+
     init(project: Project,  location: Location) {
         self.project = project
         self.location = location
@@ -181,7 +181,7 @@ struct LocationView: View {
                         self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
                             self.placemark = placemarks?.first
                         })
-                    }
+                    }.store(in: &cancellable)
                 }
         }
     }

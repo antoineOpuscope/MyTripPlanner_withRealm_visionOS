@@ -51,6 +51,7 @@ class Project: Identifiable, Codable, ObservableObject {
         self.locations = locations
         self.creationDate = Date()
         
+        // AOM - Maybe it should be in the view
         $locations.sink { locations in
             self.pins = locations.map {Pin(location: $0)}
         }.store(in: &subscribers)
