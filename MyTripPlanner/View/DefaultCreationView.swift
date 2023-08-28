@@ -30,11 +30,13 @@ struct DefaultCreationView: View {
                     Text("Name : ")
                     TextField("Enter name...", text: $name)
                         .textFieldStyle(.roundedBorder)
+                        .autocorrectionDisabled()
                 }
                 HStack {
                     Text("Description : ")
                     TextField("Enter description...", text: $description, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
+                        .autocorrectionDisabled()
                 }
                 Spacer()
             }.padding()
