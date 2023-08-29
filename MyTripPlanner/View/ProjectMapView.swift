@@ -21,36 +21,40 @@ struct ProjectMapView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                MapView(project: project, isContextMenuAllowed: true, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
+            MapView(project: project, isContextMenuAllowed: true, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isSearchingLocation.toggle()
+                        } label: {
+                            Image(systemName: "magnifyingglass")
+                        }.disabled(isAddingLocation || isSearchingLocation)
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isAddingLocation.toggle()
+                        } label: {
+                            Image(systemName: "plus")
+                        }.disabled(isAddingLocation || isSearchingLocation)
+                    }
+                    if isSearchingLocation || isAddingLocation {
+                        ToolbarItem(placement: .topBarLeading) {
                             Button {
-                                isSearchingLocation.toggle()
+                                isSearchingLocation = false
+                                isAddingLocation = false
                             } label: {
-                                Image(systemName: "magnifyingglass")
-                            }.disabled(isAddingLocation || isSearchingLocation)
-                        }
-                        
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button {
-                                isAddingLocation.toggle()
-                            } label: {
-                                Image(systemName: "plus")
-                            }.disabled(isAddingLocation || isSearchingLocation)
-                        }
-                        if isSearchingLocation || isAddingLocation {
-                            ToolbarItem(placement: .topBarLeading) {
-                                Button {
-                                    isSearchingLocation = false
-                                    isAddingLocation = false
-                                } label: {
-                                    Text("Cancel")
-                                }
+                                Text("Cancel")
                             }
                         }
                     }
-                // TODO - AOM - Check if overlay would be better in these cases
+            }
+            .overlay {
+                if isSearchingLocation {
+                    SearchingLocationView(isSearchingLocation: $isSearchingLocation, centerPosition: $centerPosition)
+                }
+            }
+            .overlay {
                 if isAddingLocation {
                     VStack {
                         Label("Tap on map to drop a new location", systemImage: "hand.tap")
@@ -62,10 +66,8 @@ struct ProjectMapView: View {
                         Spacer()
                     }.padding(.top)
                 }
-                if isSearchingLocation {
-                    SearchingLocationView(isSearchingLocation: $isSearchingLocation, centerPosition: $centerPosition)
-                }
-            }.navigationTitle("\(project.name)")
+            }
+            .navigationTitle("\(project.name)")
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationBarBackButtonHidden(isSearchingLocation || isAddingLocation)
         }
