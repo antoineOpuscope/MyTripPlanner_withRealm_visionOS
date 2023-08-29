@@ -50,6 +50,7 @@ struct ProjectMapView: View {
                             }
                         }
                     }
+                // TODO - AOM - Check if overlay would be better in these cases
                 if isAddingLocation {
                     VStack {
                         Label("Tap on map to drop a new location", systemImage: "hand.tap")
