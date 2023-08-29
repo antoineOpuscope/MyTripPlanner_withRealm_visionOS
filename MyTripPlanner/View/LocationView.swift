@@ -30,8 +30,6 @@ struct LocationView: View {
     
     let geoCoder = CLGeocoder()
     
-    @State private var cancellable = Set<AnyCancellable>()
-
     init(project: Project,  location: Location) {
         self.project = project
         self.location = location
@@ -176,13 +174,11 @@ struct LocationView: View {
                         )
                     )
                 }
-                .onAppear {
-                    location.$coordinate.sink { coordinate in
+                .onReceive(location.$coordinate) { coordinate in
                         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
                         self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
                             self.placemark = placemarks?.first
                         })
-                    }.store(in: &cancellable)
                 }
         }
     }
