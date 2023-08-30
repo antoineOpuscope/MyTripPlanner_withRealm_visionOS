@@ -53,7 +53,7 @@ struct AllProjectsView: View {
                         }
                     }
                     ToolbarItem(placement: .topBarLeading) {
-                        if isMergingProjects == false {
+                        if isMergingProjects == false && stateController.projects.count >= 2 {
                             Button("Add", systemImage: "arrow.triangle.merge") {
                                 self.isMergingProjects.toggle()
                             }
