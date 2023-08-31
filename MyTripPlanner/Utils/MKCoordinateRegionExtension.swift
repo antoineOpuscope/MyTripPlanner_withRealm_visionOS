@@ -19,16 +19,16 @@ extension MKCoordinateRegion {
         
         let transformedRegion = MKCoordinateRegion.region(for: coordinates, transform: MKCoordinateRegion.transform, inverseTransform: MKCoordinateRegion.inverseTransform)
         
-        if let a = primeRegion,
-            let b = transformedRegion,
-            let min = [a, b].min(by: { $0.span.longitudeDelta < $1.span.longitudeDelta }) {
+        if let primeRegion,
+            let transformedRegion,
+            let min = [primeRegion, transformedRegion].min(by: { $0.span.longitudeDelta < $1.span.longitudeDelta }) {
             self = min
         }
-        else if let a = primeRegion {
-            self = a
+        else if let primeRegion {
+            self = primeRegion
         }
-        else if let b = transformedRegion {
-            self = b
+        else if let transformedRegion {
+            self = transformedRegion
         }
         else {
             return nil
@@ -46,15 +46,15 @@ extension MKCoordinateRegion {
     }
     
     // Latitude -180...180 -> 0...360
-    private static func transform(c: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-        if c.longitude < 0 { return CLLocationCoordinate2D(latitude: c.latitude, longitude: 360 + c.longitude) }
-        return c
+    private static func transform(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+        if coordinate.longitude < 0 { return CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: 360 + coordinate.longitude) }
+        return coordinate
     }
     
     // Latitude 0...360 -> -180...180
-    private static func inverseTransform(c: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-        if c.longitude > 180 { return CLLocationCoordinate2D(latitude: c.latitude, longitude: -360 + c.longitude) }
-        return c
+    private static func inverseTransform(coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+        if coordinate.longitude > 180 { return CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: -360 + coordinate.longitude) }
+        return coordinate
     }
     
     private typealias Transform = (CLLocationCoordinate2D) -> (CLLocationCoordinate2D)

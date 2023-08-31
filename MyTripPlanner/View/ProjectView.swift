@@ -29,8 +29,9 @@ struct ProjectView: View {
     
     init(project: Project) {
         self.project = project
+        let region: MKCoordinateRegion? = MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, frameSize: frameSize)
         _centerPosition = State(initialValue:
-                .region(MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, frameSize: frameSize) ?? MKCoordinateRegion.init(center: .init(latitude: 0, longitude: 0), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
+                .region(region ?? MKCoordinateRegion.init(center: .init(latitude: 0, longitude: 0), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
         )
     }
     
