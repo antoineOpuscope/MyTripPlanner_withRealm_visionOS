@@ -21,6 +21,8 @@
 		1129F9C82A82340000E3374A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1129F9C72A82340000E3374A /* Location.swift */; };
 		1129F9D52A8296A600E3374A /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1129F9D42A8296A600E3374A /* EmojiPicker */; };
 		1129F9D82A8296C800E3374A /* SymbolPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 1129F9D72A8296C800E3374A /* SymbolPicker */; };
+		11480DC12AA71F19004BF04D /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 11480DC02AA71F19004BF04D /* Realm */; };
+		11480DC32AA71F19004BF04D /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 11480DC22AA71F19004BF04D /* RealmSwift */; };
 		11A154DB2A8A355900BA65DF /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A154DA2A8A355900BA65DF /* TestData.swift */; };
 		11A154DD2A8CBE3A00BA65DF /* ProjectCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A154DC2A8CBE3A00BA65DF /* ProjectCreationView.swift */; };
 		11A154DF2A8CD5B600BA65DF /* ProjectMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A154DE2A8CD5B600BA65DF /* ProjectMapView.swift */; };
@@ -72,6 +74,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11480DC32AA71F19004BF04D /* RealmSwift in Frameworks */,
+				11480DC12AA71F19004BF04D /* Realm in Frameworks */,
 				1129F9D82A8296C800E3374A /* SymbolPicker in Frameworks */,
 				1129F9D52A8296A600E3374A /* EmojiPicker in Frameworks */,
 			);
@@ -197,6 +201,8 @@
 			packageProductDependencies = (
 				1129F9D42A8296A600E3374A /* EmojiPicker */,
 				1129F9D72A8296C800E3374A /* SymbolPicker */,
+				11480DC02AA71F19004BF04D /* Realm */,
+				11480DC22AA71F19004BF04D /* RealmSwift */,
 			);
 			productName = MyTripPlanner;
 			productReference = 1129F9A12A81381900E3374A /* MyTripPlanner.app */;
@@ -229,6 +235,7 @@
 			packageReferences = (
 				1129F9D32A8296A600E3374A /* XCRemoteSwiftPackageReference "EmojiPicker" */,
 				1129F9D62A8296C800E3374A /* XCRemoteSwiftPackageReference "SymbolPicker" */,
+				11480DBF2AA71F19004BF04D /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 1129F9A22A81381900E3374A /* Products */;
 			projectDirPath = "";
@@ -526,6 +533,14 @@
 				minimumVersion = 1.4.0;
 			};
 		};
+		11480DBF2AA71F19004BF04D /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.42.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -538,6 +553,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1129F9D62A8296C800E3374A /* XCRemoteSwiftPackageReference "SymbolPicker" */;
 			productName = SymbolPicker;
+		};
+		11480DC02AA71F19004BF04D /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11480DBF2AA71F19004BF04D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		11480DC22AA71F19004BF04D /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 11480DBF2AA71F19004BF04D /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
