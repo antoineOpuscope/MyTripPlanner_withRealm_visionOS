@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 import CoreLocation
+import RealmSwift
 
 class Pin: Identifiable {
-    let id: UUID
+    let id: UInt64
     let location: Location
     let name: String
     let coordinate: CLLocationCoordinate2D

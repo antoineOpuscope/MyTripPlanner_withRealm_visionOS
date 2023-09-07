@@ -7,91 +7,54 @@
 
 import SwiftUI
 import CoreLocation
+import RealmSwift
 
-class Location: Identifiable, Codable, ObservableObject {
-    var id = UUID()
-    @Published var name: String
-    @Published var description: String
-    @Published var isFavorite: Bool
-    @Published var color: Color = .green
-    @Published var price: Float
-    @Published var coordinate: CLLocationCoordinate2D
-    @Published var icon: String = "mappin"
+class Location: EmbeddedObject, ObjectKeyIdentifiable {
+    @Persisted var name: String
+    @Persisted var locationDescription: String
+    @Persisted var isFavorite: Bool
+    @Persisted var colorComponents: RealmSwift.List<Double>
+    @Persisted var price: Float
+    @Persisted var longitude: Double
+    @Persisted var latitude: Double
+    @Persisted var icon: String = "mappin"
     
-    enum LocationDecodingError: Error {
-        case invalidCoordinateData
+    @Persisted(originProperty: "locations") var project: LinkingObjects<Project>
+    
+    override class public func propertiesMapping() -> [String: String] {
+        ["locationDescription": "description"]
     }
     
-    enum CodingKeys: String, CodingKey {
-        case id, name, description, isFavorite, color, price
-        case coordinateLatitude = "latitude"
-        case coordinateLongitude = "longitude"
-    }
-    
-    // Nouvel initialiseur pour créer une copie profonde avec un nouvel ID
-    init(copying location: Location) {
-        self.id = UUID() // Nouvel ID
-        self.name = location.name
-        self.description = location.description
-        self.isFavorite = location.isFavorite
-        self.color = location.color
-        self.price = location.price
-        self.coordinate = location.coordinate
-        self.icon = location.icon
-    }
-    
-    init(id: UUID = UUID(), name: String, description: String, isFavorite: Bool, color: Color, price: Float, coordinate: CLLocationCoordinate2D, icon: String) {
-        self.id = id
+    convenience init(name: String, locationDescription: String, isFavorite: Bool, color: Color, price: Float, coordinate: CLLocationCoordinate2D, icon: String) {
+        self.init()
+
         self.name = name
-        self.description = description
+        self.locationDescription = locationDescription
         self.isFavorite = isFavorite
-        self.color = color
+        self.colorComponents = color.colorToRealmList
         self.price = price
-        self.coordinate = coordinate
+        self.longitude = coordinate.longitude
+        self.latitude = coordinate.latitude
         self.icon = icon
     }
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        id = try container.decode(UUID.self, forKey: .id)
-        name = try container.decode(String.self, forKey: .name)
-        description = try container.decode(String.self, forKey: .description)
-        isFavorite = try container.decode(Bool.self, forKey: .isFavorite)
-        price = try container.decode(Float.self, forKey: .price)
-        
-        guard let latitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLatitude),
-                  let longitude = try container.decodeIfPresent(Double.self, forKey: .coordinateLongitude) else {
-                throw LocationDecodingError.invalidCoordinateData
-            }
-        
-        coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        
-        // Decode RGB color values
-        if let colorComponents = try container.decodeIfPresent([Double].self, forKey: .color) {
-            if colorComponents.count == 3 {
-                color = Color(
-                    red: colorComponents[0],
-                    green: colorComponents[1],
-                    blue: colorComponents[2]
-                )
-            }
-        }
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D.init(latitude: CLLocationDegrees(self.latitude), longitude: CLLocationDegrees(self.longitude))
     }
     
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(name, forKey: .name)
-        try container.encode(description, forKey: .description)
-        try container.encode(isFavorite, forKey: .isFavorite)
-        try container.encode(price, forKey: .price)
-        
-        // Encode RGB color values
-        let colorComponents = color.rgbComponents
-        try container.encode(colorComponents, forKey: .color)
-        
-        try container.encode(coordinate.latitude, forKey: .coordinateLatitude)
-        try container.encode(coordinate.longitude, forKey: .coordinateLongitude)
+    var color: Color {
+        get {
+            // Convert the stored hexadecimal string back to a Color
+            return Color(
+                red: colorComponents[0],
+                green: colorComponents[1],
+                blue: colorComponents[2]
+            )
+        }
+        set {
+            // TODO: AOM - Find a better way to initialize
+            colorComponents = newValue.colorToRealmList
+        }
     }
 }
 
@@ -102,5 +65,14 @@ extension Color {
         var blue: CGFloat = 0
         UIColor(self).getRed(&red, green: &green, blue: &blue, alpha: nil)
         return [Double(red), Double(green), Double(blue)]
+    }
+    
+    var colorToRealmList: RealmSwift.List<Double> {
+        let components = RealmSwift.List<Double>()
+        components.append(self.rgbComponents[0])
+        components.append(self.rgbComponents[1])
+        components.append(self.rgbComponents[2])
+        // Convert the Color to a hexadecimal string for storage
+        return components
     }
 }

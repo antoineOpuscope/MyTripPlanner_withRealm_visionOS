@@ -7,10 +7,11 @@
 
 import SwiftUI
 import MapKit
+import RealmSwift
 
 struct ProjectView: View {
     
-    @ObservedObject var project: Project
+    @ObservedRealmObject var project: Project
     
     @EnvironmentObject private var stateController: StateController
     @EnvironmentObject private var locationManager: LocationManager
@@ -28,7 +29,7 @@ struct ProjectView: View {
     let frameSize: CGSize = .init(width: 350, height: 300)
     
     init(project: Project) {
-        self.project = project
+        _project = ObservedRealmObject(wrappedValue: project)
         let region: MKCoordinateRegion? = MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, frameSize: frameSize)
         _centerPosition = State(initialValue:
                 .region(region ?? MKCoordinateRegion.init(center: .init(latitude: 0, longitude: 0), span: .init(latitudeDelta: 0.1, longitudeDelta: 0.1)))
@@ -56,7 +57,7 @@ struct ProjectView: View {
                         Text("Name")
                     }
                     Section {
-                        TextField("Description", text: $project.description, axis: .vertical)
+                        TextField("Description", text: $project.projectDescription, axis: .vertical)
                             .disabled(isEditing == false)
                     } header: {
                         Text("Description")

@@ -15,8 +15,7 @@ struct ProjectCreationView: View {
     @EnvironmentObject private var stateController: StateController
         
     var body: some View {
-        
-        let project = Project(name: self.name, description: self.description, locations: [])
+        let project = Project(name: self.name, description: self.description)
         
         DefaultCreationView(name: $name, description: $description,
                             saveAction: {stateController.addProject(project: project)},

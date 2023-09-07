@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import RealmSwift
 
 struct LocationCreationView: View {
     @State private var name: String = ""
@@ -15,7 +16,7 @@ struct LocationCreationView: View {
     @EnvironmentObject private var stateController: StateController
     
     let newTappedCoordinate: CLLocationCoordinate2D
-    let project: Project
+    @ObservedRealmObject var project: Project
     
     var body: some View {
         
@@ -23,8 +24,9 @@ struct LocationCreationView: View {
         
         DefaultCreationView(name: $name, description: $description,
                             saveAction: {
-            let location = Location(name: name, description: description, isFavorite: false, color: .green, price: 0, coordinate: self.newTappedCoordinate, icon: "mappin")
-
+            let location = Location(name: name, locationDescription: description, isFavorite: false, color: .green, price: 0, coordinate: self.newTappedCoordinate, icon: "mappin")
+            
+            
             stateController.addLocation(project: project, location: location)
         },
                             cancelAction: {}

@@ -35,7 +35,6 @@
 		11B40B492A9663F8002D5C84 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B482A9663F8002D5C84 /* LocationManager.swift */; };
 		11B40B4B2A97ADDB002D5C84 /* ExtensionPlacemark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B4A2A97ADDB002D5C84 /* ExtensionPlacemark.swift */; };
 		11B40B4D2A98E1C9002D5C84 /* ExtensionCLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B40B4C2A98E1C9002D5C84 /* ExtensionCLLocationCoordinate2D.swift */; };
-		11EB0C372A868AE50060E253 /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C362A868AE50060E253 /* StorageController.swift */; };
 		11EB0C392A868D710060E253 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EB0C382A868D710060E253 /* StateController.swift */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,6 @@
 		11B40B482A9663F8002D5C84 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		11B40B4A2A97ADDB002D5C84 /* ExtensionPlacemark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionPlacemark.swift; sourceTree = "<group>"; };
 		11B40B4C2A98E1C9002D5C84 /* ExtensionCLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionCLLocationCoordinate2D.swift; sourceTree = "<group>"; };
-		11EB0C362A868AE50060E253 /* StorageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		11EB0C382A868D710060E253 /* StateController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				11EB0C382A868D710060E253 /* StateController.swift */,
-				11EB0C362A868AE50060E253 /* StorageController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,7 +188,6 @@
 				1129F99D2A81381900E3374A /* Sources */,
 				1129F99E2A81381900E3374A /* Frameworks */,
 				1129F99F2A81381900E3374A /* Resources */,
-				116086B72AA0D0D700CDAACA /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -258,26 +254,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		116086B72AA0D0D700CDAACA /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		1129F99D2A81381900E3374A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -304,7 +280,6 @@
 				1129F9A72A81381900E3374A /* ContentView.swift in Sources */,
 				11A154DD2A8CBE3A00BA65DF /* ProjectCreationView.swift in Sources */,
 				11B40B492A9663F8002D5C84 /* LocationManager.swift in Sources */,
-				11EB0C372A868AE50060E253 /* StorageController.swift in Sources */,
 				1129F9C82A82340000E3374A /* Location.swift in Sources */,
 				1129F9A52A81381900E3374A /* MyTripPlannerApp.swift in Sources */,
 			);

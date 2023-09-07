@@ -8,21 +8,24 @@
 import Foundation
 import Combine
 import CoreLocation
+import RealmSwift
 
-class Project: Identifiable, Codable, ObservableObject {
-    var id = UUID()
+class Project: Object, ObjectKeyIdentifiable {
+    @Persisted(primaryKey: true) var _id: ObjectId
     
-    @Published var name: String
-    @Published var description = ""
-    @Published var tripDate: DateInterval? = nil
-    @Published var creationDate: Date
+    @Persisted var name: String
+    @Persisted var projectDescription: String// description is not allowed by Realm
+    @Persisted var creationDate: Date
     
-    // TODO keep only the id of location and create a list location in StateController
-    @Published var locations: [Location] = []
+    @Persisted var locations: RealmSwift.List<Location>
     @Published var pins: [Pin] = []
     
     private var subscribers: Set<AnyCancellable> = []
 
+    override class public func propertiesMapping() -> [String: String] {
+        ["projectDescription": "description"]
+    }
+    
     func computeCenter() -> CLLocationCoordinate2D? {
         let coordinates = locations.map({ $0.coordinate})
         guard !coordinates.isEmpty else {
@@ -43,60 +46,21 @@ class Project: Identifiable, Codable, ObservableObject {
         return CLLocationCoordinate2D(latitude: averageLatitude, longitude: averageLongitude)
     }
     
-    init(id: UUID = UUID(), name: String, description: String = "", tripDate: DateInterval? = nil, locations: [Location]) {
-        self.id = id
+    convenience init(name: String, description: String, locations: [Location] = []) {
+        self.init()
+        
         self.name = name
-        self.description = description
-        self.tripDate = tripDate
-        self.locations = locations
-        self.creationDate = Date()
-        
+        self.projectDescription = description
+        let locationsRealmList = RealmSwift.List<Location>()
+        locationsRealmList.append(objectsIn: locations)
+        self.locations = locationsRealmList
+        /*
         // AOM - Maybe it should be in the view
-        $locations.sink { locations in
+        self.locations.collectionPublisher.sink(receiveCompletion: {_ in},
+                                           receiveValue: {locations in
+            print("Project: \(locations.count)")
             self.pins = locations.map {Pin(location: $0)}
-        }.store(in: &subscribers)
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case description
-        case tripDate
-        case creationDate
-        case locations
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        name = try container.decode(String.self, forKey: .name)
-        description = try container.decode(String.self, forKey: .description)
-        tripDate = try container.decodeIfPresent(DateInterval.self, forKey: .tripDate)
-        creationDate = try container.decode(Date.self, forKey: .creationDate)
-        locations = try container.decode([Location].self, forKey: .locations)
-        
-        // AOM - Maybe it should be in the view
-        $locations.sink { locations in
-            self.pins = locations.map {Pin(location: $0)}
-        }.store(in: &subscribers)
-        
-        // For decoding the UUID from a string representation
-        if let idString = try? container.decode(String.self, forKey: .id),
-           let decodedId = UUID(uuidString: idString) {
-            id = decodedId
-        }
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(name, forKey: .name)
-        try container.encode(description, forKey: .description)
-        try container.encodeIfPresent(tripDate, forKey: .tripDate)
-        try container.encode(creationDate, forKey: .creationDate)
-        try container.encode(locations, forKey: .locations)
-        
-        // For encoding the UUID as a string representation
-        try container.encode(id.uuidString, forKey: .id)
+        }).store(in: &subscribers)
+         */
     }
 }

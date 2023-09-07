@@ -11,10 +11,11 @@ import EmojiPicker
 import Combine
 import CoreLocation
 import MapKit
+import RealmSwift
 
 struct LocationView: View {
-    @ObservedObject var project: Project
-    @ObservedObject var location: Location
+    @ObservedRealmObject var project: Project
+    @ObservedRealmObject var location: Location
     
     @State var isEditing: Bool = false
     @State var isEmojiPickerPresented: Bool = false
@@ -31,8 +32,8 @@ struct LocationView: View {
     let geoCoder = CLGeocoder()
     
     init(project: Project,  location: Location) {
-        self.project = project
-        self.location = location
+        _project = ObservedRealmObject(wrappedValue: project)
+        _location = ObservedRealmObject(wrappedValue: location)
         _centerPosition = State(initialValue:
             .camera(
                     MapCamera(
@@ -111,7 +112,7 @@ struct LocationView: View {
                     }
                     
                     Section {
-                        TextField("Description", text: $location.description, axis: .vertical)
+                        TextField("Description", text: $location.locationDescription, axis: .vertical)
                             .disabled(isEditing == false)
                     } header: {
                         Text("Description")
@@ -174,12 +175,14 @@ struct LocationView: View {
                         )
                     )
                 }
-                .onReceive(location.$coordinate) { coordinate in
-                        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            /*
+                .onReceive(location.latitude) { lat in
+                    let location = CLLocation(latitude: location.latitude, longitude: location.longitude)
                         self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
                             self.placemark = placemarks?.first
                         })
                 }
+             */
         }
     }
 }

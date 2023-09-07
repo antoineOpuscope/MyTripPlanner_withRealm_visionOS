@@ -8,11 +8,12 @@
 import SwiftUI
 import MapKit
 import Combine
+import RealmSwift
 
 struct MapView: View {
         
-    @ObservedObject var project: Project
-    // AOM - @ObservedObject not needed because we wont edit it
+    @ObservedRealmObject var project: Project
+    // AOM - @ObservedRealmObject not needed because we wont edit it
     var location: Location?
     
     var isContextMenuAllowed: Bool
@@ -36,7 +37,7 @@ struct MapView: View {
     @Binding private var cameraPosition: MapCameraPosition
     
     init(project: Project, isContextMenuAllowed: Bool, cameraPosition: Binding<MapCameraPosition>, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
-        _project = ObservedObject(wrappedValue: project)
+        _project = ObservedRealmObject(wrappedValue: project)
         self.location = location
         self.isContextMenuAllowed = isContextMenuAllowed
         //https://sarunw.com/posts/binding-initialization/

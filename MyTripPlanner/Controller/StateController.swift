@@ -8,20 +8,34 @@
 
 import Foundation
 import CoreLocation
+import RealmSwift
 
 @MainActor
 class StateController: ObservableObject {
-	@Published var projects: [Project]
-	
-    // TODO: create a list location in StateController and Project will contains only locations Ids
-    
-	private let storageController = StorageController()
+    private(set) var localRealm: Realm?
+    @ObservedResults(Project.self) var projects
 	
 	init() {
-		self.projects = storageController.fetchProject()
+        self.openRealm()
 	}
     
+    func openRealm() {
+        do {
+            // Setting the schema version
+            let config = Realm.Configuration(schemaVersion: 1)
+
+            // Letting Realm know we want the defaultConfiguration to be the config variable
+            Realm.Configuration.defaultConfiguration = config
+
+            // Trying to open a Realm and saving it into the localRealm variable
+            localRealm = try Realm()
+        } catch {
+            print("Error opening Realm", error)
+        }
+    }
+    
     func mergeSelectedProjects(selectedProject: Set<UUID>) {
+        /*
         let selectedProjects: [Project] = self.projects.filter {selectedProject.contains($0.id)}
         
         // Create a set to store unique coordinates
@@ -39,47 +53,61 @@ class StateController: ObservableObject {
         let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocationDeepCopy)
         
         self.addProject(project: project)
+         */
     }
     
     func addProject(project: Project) {
-        projects.append(project)
-        storageController.save(projects)
+        $projects.append(project)
     }
     
     func removeProject(project: Project) {
-        projects.removeAll {$0.id == project.id}
-        storageController.save(projects)
+        if let localRealm {
+            // TOODO: AOM - Remove this `!`
+            try! localRealm.write {
+                localRealm.delete(project)
+            }
+        }
     }
     
     func updateProject(project: Project) {
-        guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
-
-        projects[projectIndex] = project
-        self.objectWillChange.send()
-        storageController.save(projects)
+        if let localRealm {
+            try! localRealm.write {
+                localRealm.add(project, update: .modified)
+            }
+        }
     }
     
     func addLocation(project: Project, location: Location) {
-        guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
-        projects[projectIndex].locations.append(location)
-        self.objectWillChange.send()
-        storageController.save(projects)
+        if let localRealm {
+            // TOODO: AOM - Remove this `!`
+            try! localRealm.write {
+                project.locations.append(location)
+            }
+        }
     }
     
     func removeLocation(project: Project, location: Location) {
-        guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
-        projects[projectIndex].locations.removeAll {$0.id == location.id}
+        if let localRealm {
+            // TOODO: AOM - Remove this `!`
+            try! localRealm.write {
+                if let index = project.locations.index(of: location) {
+                    project.locations.remove(at: index)
+                }
+            }
+        }
         self.objectWillChange.send()
-        storageController.save(projects)
     }
     
     func updateLocation(project: Project, location: Location) {
-        guard let projectIndex = projects.firstIndex(where: { $0.id == project.id }) else { return }
-        guard let locationIndex = projects[projectIndex].locations.firstIndex(where: { $0.id == location.id }) else { return }
-        
-        // Maybe it is overkill but it is a first solution
-        projects[projectIndex].locations[locationIndex] = location
-        self.objectWillChange.send()
-        storageController.save(projects)
+        if let localRealm {
+            // TOODO: AOM - Remove this `!`
+            try! localRealm.write {
+                // Find the index of the location in the locations list
+                if let index = project.locations.index(of: location) {
+                    // Update the location at the found index
+                    project.locations[index] = location
+                }
+            }
+        }
     }
 }

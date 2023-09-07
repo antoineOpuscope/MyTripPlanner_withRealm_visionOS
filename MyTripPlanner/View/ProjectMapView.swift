@@ -8,10 +8,11 @@
 import SwiftUI
 import CoreLocation
 import MapKit
+import RealmSwift
 
 struct ProjectMapView: View {
     
-    @ObservedObject var project: Project
+    @ObservedRealmObject var project: Project
     @EnvironmentObject private var stateController: StateController
     
     @State private var isAddingLocation: Bool = false
