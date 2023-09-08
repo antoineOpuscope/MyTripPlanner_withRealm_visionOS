@@ -62,6 +62,7 @@ class StateController: ObservableObject {
     }
     
     // AOM - Dont use  Project instead of ProjectId because otherwise the app crash "Object has been deleted or invalidated." need  to investigate
+    // but it works if we do this code in ProjectView directly with project instead of projectId
     func removeProject(projectId: ObjectId) {
         if let projectToRemove = projects.where {$0._id == projectId}.first {
             $projects.remove(projectToRemove)
