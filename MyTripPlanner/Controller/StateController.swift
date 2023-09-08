@@ -109,12 +109,13 @@ class StateController: ObservableObject {
             return
         }
         
-        if let locationIdToRemove = thawedProject.locations.firstIndex(where: {$0.id == locationId}) {
+        if let locationToRemove = thawedProject.locations.first(where: {$0.id == locationId}) {
             if let localRealm {
                 do {
                     try localRealm.write {
-                        print("thawedProject location count \(thawedProject.locations.count) || index to remove \(locationIdToRemove)")
-                        thawedProject.locations.remove(at: locationIdToRemove)
+                        print("thawedProject location count \(thawedProject.locations.count) || index to remove \(locationToRemove.name)")
+                        //thawedProject.locations.remove(locationToRemove)
+                        localRealm.delete(locationToRemove)
                         print("done!")
                     }
                 } catch {

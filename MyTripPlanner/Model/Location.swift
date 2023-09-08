@@ -45,6 +45,9 @@ class Location: EmbeddedObject, ObjectKeyIdentifiable {
     var color: Color {
         get {
             // Convert the stored hexadecimal string back to a Color
+            if colorComponents.count != 3 {
+                return .red
+            }
             return Color(
                 red: colorComponents[0],
                 green: colorComponents[1],
