@@ -74,7 +74,7 @@ struct MapView: View {
                                             PinView(pin: pin)
                                                 .contextMenu(ContextMenu(menuItems: {
                                                     Button(role: .destructive) {
-                                                        stateController.removeLocation(project: self.project, location: pin.location)
+                                                        stateController.removeLocation(project: project, locationId: pin.location.id)
                                                     } label: {
                                                         Label("Delete", systemImage: "trash")
                                                     }

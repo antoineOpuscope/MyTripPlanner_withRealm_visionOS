@@ -169,7 +169,7 @@ struct LocationView: View {
                           secondaryButton: .destructive(
                             Text("Delete"),
                             action: {
-                                stateController.removeLocation(project: project, location: location)
+                                stateController.removeLocation(project: project, locationId: location.id)
                                 self.dismiss()
                             }
                         )
