@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 @main
-struct MyTripPlannerApp: App {
+struct MyTripPlannerApp: SwiftUI.App {
     
     // https://www.avanderlee.com/swiftui/stateobject-observedobject-differences/
     @StateObject var stateController = StateController()
@@ -20,6 +21,7 @@ struct MyTripPlannerApp: App {
             ContentView()
                 .environmentObject(stateController)
                 .environmentObject(locationManager)
+                .environment(\.realmConfiguration, Realm.Configuration())
         }
     }
 }

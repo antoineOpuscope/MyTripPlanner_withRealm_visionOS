@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ContentView: View {
     var body: some View {
@@ -18,5 +19,6 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(StateController())
             .environmentObject(LocationManager())
+            .environment(\.realmConfiguration, Realm.Configuration())
     }
 }

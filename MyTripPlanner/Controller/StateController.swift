@@ -58,41 +58,77 @@ class StateController: ObservableObject {
     
     func addProject(project: Project) {
         $projects.append(project)
+        self.objectWillChange.send()
     }
     
     func removeProject(project: Project) {
-        if let localRealm {
-            // TOODO: AOM - Remove this `!`
-            try! localRealm.write {
-                localRealm.delete(project)
-            }
-        }
+        print("Remove project")
+        //$projects.remove(project)
+        self.objectWillChange.send()
+        print("Remove project finish")
     }
     
     func updateProject(project: Project) {
+
         if let localRealm {
-            try! localRealm.write {
-                localRealm.add(project, update: .modified)
+            do {
+                try localRealm.write {
+                    localRealm.create(Project.self, value: project, update: .modified)
+                }
+            }
+            catch {
+                print("StateController: removeProject error \(error)")
             }
         }
+        self.objectWillChange.send()
     }
     
     func addLocation(project: Project, location: Location) {
+        
+        guard let thawedProject = project.thaw() else {
+            return
+        }
+        
         if let localRealm {
-            // TOODO: AOM - Remove this `!`
-            try! localRealm.write {
-                project.locations.append(location)
+            do {
+                try localRealm.write {
+                    thawedProject.locations.append(location)
+                }
+            }
+            catch {
+                print("StateController: removeProject error \(error)")
             }
         }
     }
     
+    func removeLocationV2(_ location: Location) {
+            guard let thawedLocation = location.thaw() else {
+                return
+            }
+
+            if thawedLocation.isInvalidated == false { //ensure it's a valid item
+                let thawedRealm = thawedLocation.realm! //get the realm it belongs to
+                do {
+                    try thawedRealm.write {
+                        thawedRealm.delete(thawedLocation)
+                    }
+                } catch {
+                    print("Error deleting user: \(error)")
+                }
+            }
+        }
+    
     func removeLocation(project: Project, location: Location) {
         if let localRealm {
-            // TOODO: AOM - Remove this `!`
-            try! localRealm.write {
-                if let index = project.locations.index(of: location) {
-                    project.locations.remove(at: index)
+            do {
+                try localRealm.write {
+                    if let index = project.locations.index(of: location) {
+                        project.locations.remove(at: index)
+                    }
                 }
+            }
+            catch {
+                print("StateController: removeProject error \(error)")
             }
         }
         self.objectWillChange.send()
@@ -100,13 +136,17 @@ class StateController: ObservableObject {
     
     func updateLocation(project: Project, location: Location) {
         if let localRealm {
-            // TOODO: AOM - Remove this `!`
-            try! localRealm.write {
-                // Find the index of the location in the locations list
-                if let index = project.locations.index(of: location) {
-                    // Update the location at the found index
-                    project.locations[index] = location
+            do {
+                try localRealm.write {
+                    // Find the index of the location in the locations list
+                    if let index = project.locations.index(of: location) {
+                        // Update the location at the found index
+                        project.locations[index] = location
+                    }
                 }
+            }
+            catch {
+                print("StateController: removeProject error \(error)")
             }
         }
     }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreLocation
+import RealmSwift
 
 struct AllProjectsView: View {
     
@@ -19,10 +20,12 @@ struct AllProjectsView: View {
     
     @State var isMergingProjects = false
     
+    @ObservedResults(Project.self) var projects
+    
     var body: some View {
         NavigationStack {
             List(selection: $multiSelection) {
-                ForEach(stateController.projects, id: \.id) {project in
+                ForEach(projects, id: \.id) {project in
                     NavigationLink {
                         ProjectView(project: project)
                     } label: {
