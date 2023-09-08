@@ -58,16 +58,14 @@ class StateController: ObservableObject {
     
     func addProject(project: Project) {
         $projects.append(project)
-        self.objectWillChange.send()
     }
     
     // AOM - Dont use  Project instead of ProjectId because otherwise the app crash "Object has been deleted or invalidated." need  to investigate
     // but it works if we do this code in ProjectView directly with project instead of projectId
     func removeProject(projectId: ObjectId) {
-        if let projectToRemove = projects.where {$0._id == projectId}.first {
+        if let projectToRemove = projects.where({$0._id == projectId}).first {
             $projects.remove(projectToRemove)
         }
-        self.objectWillChange.send()
     }
     
     func updateProject(project: Project) {
@@ -82,7 +80,6 @@ class StateController: ObservableObject {
                 print("StateController: removeProject error \(error)")
             }
         }
-        self.objectWillChange.send()
     }
     
     func addLocation(project: Project, location: Location) {
@@ -121,7 +118,6 @@ class StateController: ObservableObject {
                 }
             }
         }
-        self.objectWillChange.send()
     }
     
     func updateLocation(project: Project, location: Location) {
