@@ -9,8 +9,6 @@ import Foundation
 import Combine
 import CoreLocation
 import RealmSwift
-import RxRealm
-import RxSwift
 
 class Project: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
