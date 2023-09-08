@@ -113,8 +113,6 @@ class StateController: ObservableObject {
             if let localRealm {
                 do {
                     try localRealm.write {
-                        print("thawedProject location count \(thawedProject.locations.count) || index to remove \(locationToRemove.name)")
-                        //thawedProject.locations.remove(locationToRemove)
                         localRealm.delete(locationToRemove)
                         print("done!")
                     }
@@ -127,13 +125,18 @@ class StateController: ObservableObject {
     }
     
     func updateLocation(project: Project, location: Location) {
+        
+        guard let thawedProject = project.thaw() else {
+            return
+        }
+        
         if let localRealm {
             do {
                 try localRealm.write {
                     // Find the index of the location in the locations list
-                    if let index = project.locations.index(of: location) {
+                    if let index = thawedProject.locations.index(of: location) {
                         // Update the location at the found index
-                        project.locations[index] = location
+                        thawedProject.locations[index] = location
                     }
                 }
             }
