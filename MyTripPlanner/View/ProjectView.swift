@@ -117,10 +117,8 @@ struct ProjectView: View {
                         secondaryButton: .destructive(
                             Text("Delete"),
                             action: {
+                                stateController.removeProject(projectId: self.project._id)
                                 self.dismiss()
-                                stateController.$projects.remove(project)
-                                stateController.objectWillChange.send()
-                                //stateController.removeProject(project: self.project)
                             }
                         )
                     )

@@ -61,11 +61,12 @@ class StateController: ObservableObject {
         self.objectWillChange.send()
     }
     
-    func removeProject(project: Project) {
-        print("Remove project")
-        //$projects.remove(project)
+    // AOM - Dont use  Project instead of ProjectId because otherwise the app crash "Object has been deleted or invalidated." need  to investigate
+    func removeProject(projectId: ObjectId) {
+        if let projectToRemove = projects.where {$0._id == projectId}.first {
+            $projects.remove(projectToRemove)
+        }
         self.objectWillChange.send()
-        print("Remove project finish")
     }
     
     func updateProject(project: Project) {
