@@ -15,7 +15,7 @@ struct AllProjectsView: View {
     
     @State var isCreateProjectViewPresented: Bool = false
     
-    @State private var multiSelection = Set<UUID>()
+    @State private var multiSelection = Set<UInt64>()
     @State private var isPresentedMergeConfirmationAlert = false
     
     @State var isMergingProjects = false

@@ -34,7 +34,7 @@ class StateController: ObservableObject {
         }
     }
     
-    func mergeSelectedProjects(selectedProject: Set<UUID>) {
+    func mergeSelectedProjects(selectedProject: Set<UInt64>) {
         /*
         let selectedProjects: [Project] = self.projects.filter {selectedProject.contains($0.id)}
         
