@@ -19,6 +19,5 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
             .environmentObject(StateController())
             .environmentObject(LocationManager())
-            .environment(\.realmConfiguration, Realm.Configuration())
     }
 }
