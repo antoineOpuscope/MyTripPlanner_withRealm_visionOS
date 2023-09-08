@@ -9,6 +9,8 @@ import Foundation
 import Combine
 import CoreLocation
 import RealmSwift
+import RxRealm
+import RxSwift
 
 class Project: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var _id: ObjectId
@@ -18,7 +20,6 @@ class Project: Object, ObjectKeyIdentifiable {
     @Persisted var creationDate: Date
     
     @Persisted var locations: RealmSwift.List<Location>
-    @Published var pins: [Pin] = []
     
     private var subscribers: Set<AnyCancellable> = []
 
@@ -54,13 +55,6 @@ class Project: Object, ObjectKeyIdentifiable {
         let locationsRealmList = RealmSwift.List<Location>()
         locationsRealmList.append(objectsIn: locations)
         self.locations = locationsRealmList
-        /*
-        // AOM - Maybe it should be in the view
-        self.locations.collectionPublisher.sink(receiveCompletion: {_ in},
-                                           receiveValue: {locations in
-            print("Project: \(locations.count)")
-            self.pins = locations.map {Pin(location: $0)}
-        }).store(in: &subscribers)
-         */
+        
     }
 }

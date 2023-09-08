@@ -65,7 +65,8 @@ struct MapView: View {
                                     }
                                 }
                             } else {
-                                ForEach(project.pins, id:\.id) { pin in
+                                // TODO: AOM - Move `project.locations.map {Pin(location: $0)}` in a event on change of locations
+                                ForEach(project.locations.map {Pin(location: $0)}, id:\.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
                                         NavigationLink {
                                             LocationView(project: self.project, location: pin.location)
