@@ -39,7 +39,7 @@ class StateController: ObservableObject {
     }
     
     func mergeSelectedProjects(selectedProject: Set<UInt64>) {
-        /*
+        
         let selectedProjects: [Project] = self.projects.filter {selectedProject.contains($0.id)}
         
         // Create a set to store unique coordinates
@@ -52,12 +52,11 @@ class StateController: ObservableObject {
                 uniqueCoordinates.insert($0.coordinate).inserted
             }
         }
-        let allUniqueLocationDeepCopy = allUniqueLocations.map {Location(copying: $0)}
+        let allUniqueLocationDeepCopy = allUniqueLocations.map {Location(value: $0)}
         
-        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), locations: allUniqueLocationDeepCopy)
+        let project = Project(name: selectedProjects.map {$0.name}.joined(separator: "-"), description: "", locations: allUniqueLocationDeepCopy)
         
         self.addProject(project: project)
-         */
     }
     
     func addProject(project: Project) {
