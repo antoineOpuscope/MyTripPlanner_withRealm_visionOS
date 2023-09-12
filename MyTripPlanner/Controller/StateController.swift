@@ -29,6 +29,10 @@ class StateController: ObservableObject {
 
             // Trying to open a Realm and saving it into the localRealm variable
             localRealm = try Realm()
+            
+            // AOM - debug useful to know the file to open with "Realm Studio" App
+            print("Realm is located at:", localRealm!.configuration.fileURL!)
+
         } catch {
             print("Error opening Realm", error)
         }
