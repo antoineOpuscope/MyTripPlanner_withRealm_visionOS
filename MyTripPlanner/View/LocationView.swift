@@ -31,6 +31,8 @@ struct LocationView: View {
     
     let geoCoder = CLGeocoder()
     
+    @State var isAddingLocation = false
+    
     init(project: Project,  location: Location) {
         _project = ObservedRealmObject(wrappedValue: project)
         _location = ObservedRealmObject(wrappedValue: location)
@@ -64,9 +66,9 @@ struct LocationView: View {
             VStack {
                 
                 NavigationLink {
-                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, location: location)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation, location: location)
                 } label: {
-                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, location: location)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation, location: location)
                         .allowsHitTesting(false)
                         .frame(height: 300)
                         .clipShape(RoundedRectangle(cornerRadius: 30))

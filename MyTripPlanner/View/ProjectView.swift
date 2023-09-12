@@ -28,6 +28,8 @@ struct ProjectView: View {
     
     let frameSize: CGSize = .init(width: 350, height: 300)
     
+    @State var isAddingLocation = false
+    
     init(project: Project) {
         _project = ObservedRealmObject(wrappedValue: project)
         let region: MKCoordinateRegion? = MKCoordinateRegion.init(coordinates: project.locations.map {$0.coordinate}, frameSize: frameSize)
@@ -42,7 +44,7 @@ struct ProjectView: View {
                 NavigationLink {
                     ProjectMapView(project: self.project, centerPosition: $centerPosition)
                 } label: {
-                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition)
+                    MapView(project: project, isContextMenuAllowed: false, cameraPosition: $centerPosition, isAddingLocation: $isAddingLocation)
                         .allowsHitTesting(false)
                         .frame(height: frameSize.height)
                         .clipShape(RoundedRectangle(cornerRadius: 30))

@@ -36,7 +36,11 @@ struct MapView: View {
         
     @Binding private var cameraPosition: MapCameraPosition
     
-    init(project: Project, isContextMenuAllowed: Bool, cameraPosition: Binding<MapCameraPosition>, isAddingLocation: Binding<Bool> = .constant(false), location: Location? = nil) {
+    @State var pins: [Pin] = []
+    
+    @State var anyCancellable: AnyCancellable? = nil
+    
+    init(project: Project, isContextMenuAllowed: Bool, cameraPosition: Binding<MapCameraPosition>, isAddingLocation: Binding<Bool>, location: Location? = nil) {
         _project = ObservedRealmObject(wrappedValue: project)
         self.location = location
         self.isContextMenuAllowed = isContextMenuAllowed
@@ -66,7 +70,7 @@ struct MapView: View {
                                 }
                             } else {
                                 // TODO: AOM - Move `project.locations.map {Pin(location: $0)}` in a event on change of locations
-                                ForEach(project.locations.map {Pin(location: $0)}, id:\.id) { pin in
+                                ForEach(self.pins, id: \.id) { pin in
                                     Annotation("", coordinate: pin.coordinate) {
                                         NavigationLink {
                                             LocationView(project: self.project, location: pin.location)
@@ -96,6 +100,14 @@ struct MapView: View {
                         .mapControls{
                             MapCompass()
                         }
+                        .onAppear() {
+                            self.pins = project.locations.map {Pin(location: $0)}
+                            if let thawedProject = project.thaw() {
+                                anyCancellable = thawedProject.objectWillChange.sink { _ in
+                                    self.pins = project.locations.map {Pin(location: $0)}
+                                }
+                            }
+                        }
                         .mapStyle(.standard(elevation: .flat))
                         .sheet(item: $tappedCoordinates) { _ in
                             if let tappedCoordinates {
@@ -117,7 +129,7 @@ struct MapView_Previews: PreviewProvider {
         @State private var cameraPosition: MapCameraPosition = .automatic
 
         var body: some View {
-            MapView(project: TestData.project, isContextMenuAllowed: true, cameraPosition: $cameraPosition)
+            MapView(project: TestData.project, isContextMenuAllowed: true, cameraPosition: $cameraPosition, isAddingLocation: .constant(false))
         }
     }
 
