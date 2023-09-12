@@ -177,14 +177,12 @@ struct LocationView: View {
                         )
                     )
                 }
-            /*
-                .onReceive(location.latitude) { lat in
-                    let location = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                        self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
-                            self.placemark = placemarks?.first
-                        })
-                }
-             */
+            .onAppear() {
+                let location = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                    self.geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, error) -> Void in
+                        self.placemark = placemarks?.first
+                    })
+             }
         }
     }
 }
