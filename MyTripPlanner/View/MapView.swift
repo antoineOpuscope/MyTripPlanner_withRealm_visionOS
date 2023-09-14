@@ -119,6 +119,7 @@ struct MapView: View {
                 }
             }
         }
+        .buttonStyle(.plain)
     }
 }
 
