@@ -55,12 +55,14 @@ struct ProjectView: View {
                     Section {
                         TextField("Name", text: $project.name)
                             .disabled(isEditing == false)
+                            .hoverEffectDisabled(isEditing == false)
                     } header: {
                         Text("Name")
                     }
                     Section {
                         TextField("Description", text: $project.projectDescription, axis: .vertical)
                             .disabled(isEditing == false)
+                            .hoverEffectDisabled(isEditing == false)
                     } header: {
                         Text("Description")
                     }
