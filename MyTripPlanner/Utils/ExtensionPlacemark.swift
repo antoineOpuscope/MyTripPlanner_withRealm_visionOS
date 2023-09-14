@@ -9,6 +9,24 @@ import Foundation
 import CoreLocation
 
 extension CLPlacemark {
+#if os(visionOS)
+
+    func getPerfectDistance() -> Double {
+        var distance: Double =  10000
+        
+        if self.thoroughfare != nil {
+            distance = 1000
+        } else if self.locality != nil {
+            distance = 10000
+        } else if self.country != nil  {
+            distance = 100000000
+        }
+        
+        return distance
+    }
+    
+#elseif os(iOS)
+    
     func getPerfectDistance() -> Double {
         var distance: Double =  10000
         if self.thoroughfare != nil {
@@ -22,4 +40,7 @@ extension CLPlacemark {
         }
         return distance
     }
+    
+#endif
+
 }
