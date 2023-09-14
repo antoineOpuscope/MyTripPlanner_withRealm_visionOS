@@ -73,7 +73,8 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
+        // TODO: AOM understand why this produce a crash
+        /*switch manager.authorizationStatus {
         case .notDetermined:
             manager.requestWhenInUseAuthorization()
         case .restricted:
@@ -84,7 +85,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
             manager.requestLocation()
         @unknown default:
             ()
-        }
+        }*/
     }
     
     func handleLocationError() {
