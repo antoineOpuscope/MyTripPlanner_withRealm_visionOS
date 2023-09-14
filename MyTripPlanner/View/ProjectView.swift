@@ -22,7 +22,7 @@ struct ProjectView: View {
     
     @State var deleteAlertIsPresented = false
     
-    private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
+    //private let backgroundColor = Color(red: 242/255, green: 242/255, blue: 247/255)
     
     @State var centerPosition: MapCameraPosition
     
@@ -114,7 +114,7 @@ struct ProjectView: View {
                         self.centerPosition = .region(region)
                     }
                 }
-                .background(backgroundColor)
+                //.background(backgroundColor)
                 .alert(isPresented: $deleteAlertIsPresented) {
                     
                     Alert(title: Text("Delete"), message: Text("Are you sur you want to delete the project ?"), primaryButton: .cancel(),
