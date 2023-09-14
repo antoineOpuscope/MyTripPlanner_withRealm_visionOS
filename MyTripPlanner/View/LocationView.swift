@@ -74,6 +74,7 @@ struct LocationView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                         .shadow(radius: 10)
                 }.padding(.horizontal)
+                .buttonStyle(.plain)
                 
                 Form {
                     Section {
